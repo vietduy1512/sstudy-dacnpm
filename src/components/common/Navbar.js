@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { withRouter } from "react-router-dom";
 import axios from 'axios'
 import { AppState } from '../../constants'
+import { connect } from 'react-redux';
+import { logout } from '../../actions/appAction'
 
 const Navbar = (props) => {
   
@@ -12,9 +14,7 @@ const Navbar = (props) => {
     event.preventDefault()
     axios.post('/auth/logout').then(response => {
       if (response.status === 200) {
-        props.updateUser(AppState.LOGOUT, {
-          email: null
-        })
+        props.logout();
       }
     }).catch(error => {
       console.log(error);
@@ -64,4 +64,9 @@ const Navbar = (props) => {
   );
 }
 
-export default withRouter(Navbar);
+const mapStateToProps = (state) => ({
+  appState: state.app.state,
+  currentUser: state.app.user
+});
+
+export default connect(mapStateToProps, { logout })(withRouter(Navbar));

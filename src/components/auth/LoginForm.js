@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
 import { useToasts } from 'react-toast-notifications'
-import { AppState } from '../../constants'
+import { connect } from 'react-redux';
+import { login } from '../../actions/appAction'
 import axios from 'axios'
 
 const LoginForm = (props) => {
@@ -29,13 +30,9 @@ const LoginForm = (props) => {
         password: form.password
       }).then(response => {
         if (response.status === 200) {
-          props.updateUser(AppState.AUTHENTICATED, {
-            email: response.data.email
-          })
-          setForm({
-            ...form,
-            redirectTo: '/'
-          })
+          let user = response.data;
+          props.login(user);
+          setForm({ ...form, redirectTo: '/' });
           addToast('Login successfully!', { appearance: 'success', autoDismiss: true, });
         }
       }).catch(error => {
@@ -91,4 +88,9 @@ const LoginForm = (props) => {
   }
 }
 
-export default LoginForm
+const mapStateToProps = (state) => ({
+  appState: state.app.state,
+  currentUser: state.app.user
+});
+
+export default connect(mapStateToProps, { login })(LoginForm);
