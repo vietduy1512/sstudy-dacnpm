@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import Navbar from 'components/common/Navbar'
-import { AppState } from 'constants/app'
 import { getUser } from 'actions/appAction'
 import { connect } from 'react-redux';
 import RouterView from 'routes/main';
@@ -12,18 +11,10 @@ const Auth = (props) => {
     // eslint-disable-next-line
   }, [])
   
-  const isLoading = props.appState === AppState.LOADING;
-
   return (
     <div>
-      {
-        isLoading ? 
-        (<>
-        </>) : (<>
-          <Navbar/>
-          <RouterView/>
-        </>)
-      }
+      <Navbar/>
+      <RouterView/>
     </div>
   );
 }

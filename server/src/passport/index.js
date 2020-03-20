@@ -2,21 +2,20 @@ const passport = require('passport');
 const LocalStrategy = require('./localStrategy');
 const User = require('../components/users/user.schema');
 
-// called on login, saves the id to session req.session.passport.user = {id:'..'}
 passport.serializeUser((user, done) => {
-  done(null, { _id: user._id })
+  done(null, user.id)
 })
 
 passport.deserializeUser((id, done) => {
-  User.findOne(
-    { _id: id },
-    (err, user) => {
+  User.findOne({where: { id: id }})
+    .then((user,t1, t2) => {
       done(null, user)
-    }
-  )
-})
+    })
+    .catch(err => {
+      console.log(err)
+    })
+});
 
-//  Use Strategies 
 passport.use(LocalStrategy)
 
 module.exports = passport
