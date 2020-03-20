@@ -1,7 +1,6 @@
 -#!/bin/sh
 ssh root@128.199.231.181 <<EOF
- ls
- cd /var/lib/jenkins/workspace/sstudy-frontend
+ cd ~/sstudy-frontend
  git pull
  npm install --production
  pm2 restart all
