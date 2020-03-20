@@ -14,4 +14,3 @@ Our members consists of:
 1612009 - Nguyễn Phước An
 
 1612107 - Hồ Ngọc Đỉnh
- 
