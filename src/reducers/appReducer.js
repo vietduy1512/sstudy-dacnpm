@@ -2,13 +2,13 @@ import {UPDATE_APP_STATE, UPDATE_APP_CURRENT_USER} from 'actions/types';
 import {AppState} from 'constants/app';
 
 const initialState = {
-  state: AppState.LOADING,
+  state: AppState.GUEST,
   user: {
     email: null,
   },
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
     case UPDATE_APP_STATE:
       return {

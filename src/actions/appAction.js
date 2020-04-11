@@ -2,7 +2,7 @@ import {UPDATE_APP_STATE, UPDATE_APP_CURRENT_USER} from './types';
 import {AppState} from 'constants/app';
 import axios from 'axios';
 
-export const getUser = () => async (dispatch) => {
+export const getUser = () => async dispatch => {
   try {
     let response = await axios.get('/auth/currentUser');
     let user = response.data.user;
@@ -16,28 +16,12 @@ export const getUser = () => async (dispatch) => {
   }
 };
 
-export const login = (user) => async (dispatch) => {
+export const login = user => async dispatch => {
   dispatchAuth(dispatch, user);
 };
 
-export const logout = () => async (dispatch) => {
-  dispatch({
-    type: UPDATE_APP_STATE,
-    appState: AppState.POST_LOGOUT,
-  });
-  dispatch({
-    type: UPDATE_APP_CURRENT_USER,
-    user: {
-      email: null,
-    },
-  });
-};
-
-export const postLogout = () => async (dispatch) => {
-  dispatch({
-    type: UPDATE_APP_STATE,
-    appState: AppState.GUEST,
-  });
+export const logout = () => async dispatch => {
+  dispatchGuest(dispatch);
 };
 
 const dispatchAuth = (dispatch, user) => {
@@ -53,10 +37,10 @@ const dispatchAuth = (dispatch, user) => {
   });
 };
 
-const dispatchGuest = (dispatch) => {
+const dispatchGuest = dispatch => {
   dispatch({
     type: UPDATE_APP_STATE,
-    user: AppState.GUEST,
+    appState: AppState.GUEST,
   });
   dispatch({
     type: UPDATE_APP_CURRENT_USER,

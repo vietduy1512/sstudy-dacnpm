@@ -3,7 +3,7 @@ import {Route, Redirect} from 'react-router-dom';
 import {AppState} from 'constants/app';
 import {connect} from 'react-redux';
 
-function GuestOnlyRoute({postLogout, appState, children, ...rest}) {
+function GuestOnlyRoute({appState, children, ...rest}) {
   return (
     <Route
       {...rest}

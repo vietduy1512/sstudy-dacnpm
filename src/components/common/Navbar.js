@@ -6,19 +6,19 @@ import {AppState} from 'constants/app';
 import {connect} from 'react-redux';
 import {logout} from 'actions/appAction';
 
-const Navbar = (props) => {
+const Navbar = props => {
   const isAuthenticated = props.appState === AppState.AUTHENTICATED;
 
-  const logout = (event) => {
+  const onLogout = event => {
     event.preventDefault();
     axios
       .post('/auth/logout')
-      .then((response) => {
+      .then(response => {
         if (response.status === 200) {
           props.logout();
         }
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
@@ -40,7 +40,7 @@ const Navbar = (props) => {
         aria-controls="navbarNavAltMarkup"
         aria-expanded="false"
         aria-label="Toggle navigation">
-        <span className="navbar-toggler-icon"></span>
+        <span className="navbar-toggler-icon" />
       </button>
       <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div className="navbar-nav">
@@ -77,8 +77,8 @@ const Navbar = (props) => {
                   <Link className="dropdown-item" to="#">
                     Settings
                   </Link>
-                  <div className="dropdown-divider"></div>
-                  <Link className="dropdown-item" onClick={logout} to="#">
+                  <div className="dropdown-divider" />
+                  <Link className="dropdown-item" onClick={onLogout} to="#">
                     Logout
                   </Link>
                 </div>
@@ -100,9 +100,12 @@ const Navbar = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   appState: state.app.state,
   currentUser: state.app.user,
 });
 
-export default connect(mapStateToProps, {logout})(withRouter(Navbar));
+export default connect(
+  mapStateToProps,
+  {logout},
+)(withRouter(Navbar));

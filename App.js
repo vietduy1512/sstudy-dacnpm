@@ -1,47 +1,19 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {createStackNavigator} from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Provider} from 'react-redux';
 import store from './src/store';
 
-import Home from './src/components/home/HomePage';
-import LoginForm from './src/components/auth/LoginForm';
-import RegisterForm from './src/components/auth/RegisterForm';
+import DashboardDrawer from './src/components/common/DashboardDrawer';
 
 const Tab = createBottomTabNavigator();
-const HomeStack = createStackNavigator();
-
-function HomeScreen() {
-  return (
-    <HomeStack.Navigator initialRouteName="Home">
-      <HomeStack.Screen name="Home" component={Home} />
-    </HomeStack.Navigator>
-  );
-}
-
-function LoginScreen() {
-  return (
-    <HomeStack.Navigator>
-      <HomeStack.Screen name="Login" component={LoginForm} />
-    </HomeStack.Navigator>
-  );
-}
-
-function RegisterScreen() {
-  return (
-    <HomeStack.Navigator>
-      <HomeStack.Screen name="Register" component={RegisterForm} />
-    </HomeStack.Navigator>
-  );
-}
 
 function SettingsScreen() {
   return (
-    <View style={styles.settings}>
+    <View>
       <Text>Settings!</Text>
     </View>
   );
@@ -52,7 +24,7 @@ const screenOptions = ({route}) => ({
     let iconName;
 
     switch (route.name) {
-      case 'Home':
+      case 'Dashboard':
         iconName = focused ? 'ios-home' : 'ios-home-outline';
         break;
       case 'Settings':
@@ -79,38 +51,10 @@ export default function App() {
         <Tab.Navigator
           screenOptions={screenOptions}
           tabBarOptions={tabBarOptions}>
-          <Tab.Screen name="Home" component={HomeScreen} />
-          <Tab.Screen name="Login" component={LoginScreen} />
-          <Tab.Screen name="Register" component={RegisterScreen} />
+          <Tab.Screen name="Dashboard" component={DashboardDrawer} />
           <Tab.Screen name="Settings" component={SettingsScreen} />
         </Tab.Navigator>
       </NavigationContainer>
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  home: {
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
-  },
-  addButton: {
-    position: 'absolute',
-    borderRadius: 40,
-    height: 80,
-    width: 80,
-    padding: 5,
-    right: 15,
-    bottom: 15,
-  },
-  addButtonImage: {
-    flex: 1,
-    width: undefined,
-    height: undefined,
-  },
-  settings: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
