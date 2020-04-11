@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 axios.defaults.baseURL =
-  process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8080';
+  process.env.REACT_APP_API_ENDPOINT || 'http://192.168.0.110:8080';
 axios.defaults.withCredentials = true;
 
 // TODO

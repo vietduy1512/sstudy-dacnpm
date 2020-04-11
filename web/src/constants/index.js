@@ -3,4 +3,4 @@ export const AppState = Object.freeze({
   AUTHENTICATED: 1,
   LOADING: 2,
   POST_LOGOUT: 3,
-})
+});
