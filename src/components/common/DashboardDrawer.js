@@ -12,7 +12,6 @@ const Drawer = createDrawerNavigator();
 
 const DashboardDrawer = props => {
   const isAuthenticated = props.appState === AppState.AUTHENTICATED;
-  console.log(props.appState);
 
   return (
     <Drawer.Navigator>
