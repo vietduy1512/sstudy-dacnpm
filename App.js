@@ -20,7 +20,7 @@ const screenOptions = ({route}) => ({
 
     switch (route.name) {
       case 'Dashboard':
-        iconName = focused ? 'ios-home' : 'ios-home-outline';
+        iconName = focused ? 'ios-home' : 'ios-home';
         break;
       case 'Location':
         //iconName = focused ? 'ios-settings' : 'ios-settings-outline';
