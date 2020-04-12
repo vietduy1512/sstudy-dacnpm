@@ -14,7 +14,7 @@ import DashboardDrawer from './src/components/common/DashboardDrawer';
 
 const Tab = createBottomTabNavigator();
 
-function SettingsScreen() {
+function LocationScreen() {
   const [currentRegion, setCurrentRegion] = useState({
     latitude: 0,
     longitude: 0,
@@ -74,7 +74,7 @@ const screenOptions = ({route}) => ({
       case 'Dashboard':
         iconName = focused ? 'ios-home' : 'ios-home-outline';
         break;
-      case 'Settings':
+      case 'Location':
         //iconName = focused ? 'ios-settings' : 'ios-settings-outline';
         iconName = focused ? 'ios-list-box' : 'ios-list';
         break;
@@ -113,9 +113,9 @@ export default function App() {
         <Tab.Navigator
           screenOptions={screenOptions}
           tabBarOptions={tabBarOptions}
-          initialRouteName="Settings">
+          initialRouteName="Location">
           <Tab.Screen name="Dashboard" component={DashboardDrawer} />
-          <Tab.Screen name="Settings" component={SettingsScreen} />
+          <Tab.Screen name="Location" component={LocationScreen} />
         </Tab.Navigator>
       </NavigationContainer>
     </Provider>
