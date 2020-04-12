@@ -49,6 +49,7 @@ function SettingsScreen() {
 
   useEffect(() => {
     updateCurrentPosition();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -56,7 +57,7 @@ function SettingsScreen() {
       <MapView style={styles.map} region={currentRegion}>
         <Marker
           coordinate={currentRegion}
-          title={"Vị trí của trẻ"}
+          title={'Vị trí của trẻ'}
           description={currentAddress}
         />
       </MapView>
@@ -102,7 +103,7 @@ export default function App() {
   }
 
   useEffect(() => {
-    Geocoder.init("AIzaSyB785g-zg89YA-DzRL8zmrMxXIV3T5e5-A");
+    Geocoder.init('AIzaSyB785g-zg89YA-DzRL8zmrMxXIV3T5e5-A');
     requestLocationPermission();
   }, []);
 
