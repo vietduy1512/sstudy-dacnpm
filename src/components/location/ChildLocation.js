@@ -4,6 +4,7 @@ import {View, StyleSheet, Button} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import Geocoder from 'react-native-geocoding';
+import DeviceInfo from 'react-native-device-info';
 
 function ChildLocation() {
   const [currentRegion, setCurrentRegion] = useState({
@@ -29,7 +30,11 @@ function ChildLocation() {
         );
       },
       error => console.log(error),
-      {enableHighAccuracy: true, timeout: 2000, maximumAge: 1000},
+      {
+        enableHighAccuracy: DeviceInfo.isEmulatorSync() ? true : false,
+        timeout: 2000,
+        maximumAge: 1000,
+      },
     );
   };
 
