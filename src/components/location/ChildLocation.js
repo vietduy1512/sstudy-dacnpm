@@ -29,6 +29,7 @@ function ChildLocation() {
         );
       },
       error => console.log(error),
+      {enableHighAccuracy: true, timeout: 2000, maximumAge: 1000},
     );
   };
 
