@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, {useEffect} from 'react';
+import React from 'react';
 import {View, StyleSheet, Button} from 'react-native';
 
 import PushNotification from 'react-native-push-notification';

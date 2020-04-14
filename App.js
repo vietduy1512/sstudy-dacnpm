@@ -5,12 +5,14 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Provider} from 'react-redux';
-import store from './src/store';
 import Geocoder from 'react-native-geocoding';
 
-import DashboardDrawer from './src/components/common/DashboardDrawer';
-import ChildLocation from './src/components/location/ChildLocation';
-import ChildNotification from './src/components/notification/ChildNotification';
+import store from './src/store';
+import {DASHBOARD, LOCATION, MESSAGE, NOTIFICATION} from 'constants';
+import DashboardDrawer from 'components/common/DashboardDrawer';
+import ChildLocation from 'screens/location/ChildLocation';
+import ChildNotification from 'screens/notification/ChildNotification';
+import MessageScreen from 'screens/message';
 
 const Tab = createBottomTabNavigator();
 
@@ -19,12 +21,15 @@ const screenOptions = ({route}) => ({
     let iconName;
 
     switch (route.name) {
-      case 'Dashboard':
+      case DASHBOARD:
         iconName = focused ? 'ios-home' : 'ios-home';
         break;
-      case 'Location':
+      case LOCATION:
         //iconName = focused ? 'ios-settings' : 'ios-settings-outline';
         iconName = focused ? 'ios-list-box' : 'ios-list';
+        break;
+      case MESSAGE:
+        iconName = 'ios-chatbubbles';
         break;
       default:
         iconName = focused ? 'ios-add-circle' : 'ios-add-circle-outline';
@@ -37,6 +42,7 @@ const screenOptions = ({route}) => ({
 const tabBarOptions = {
   activeTintColor: 'tomato',
   inactiveTintColor: 'gray',
+  keyboardHidesTabBar: true,
 };
 
 export default function App() {
@@ -62,9 +68,10 @@ export default function App() {
           screenOptions={screenOptions}
           tabBarOptions={tabBarOptions}
           initialRouteName="Location">
-          <Tab.Screen name="Dashboard" component={DashboardDrawer} />
-          <Tab.Screen name="Location" component={ChildLocation} />
-          <Tab.Screen name="Notification" component={ChildNotification} />
+          <Tab.Screen name={DASHBOARD} component={DashboardDrawer} />
+          <Tab.Screen name={LOCATION} component={ChildLocation} />
+          <Tab.Screen name={MESSAGE} component={MessageScreen} />
+          <Tab.Screen name={NOTIFICATION} component={ChildNotification} />
         </Tab.Navigator>
       </NavigationContainer>
     </Provider>
