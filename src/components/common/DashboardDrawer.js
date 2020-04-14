@@ -2,7 +2,8 @@ import * as React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {AppState} from 'constants/app';
 
-import Home from '../home/HomePage';
+import {HOME, LOGIN, LOGOUT, REGISTER} from 'constants';
+import Home from 'screens/home/HomePage';
 import LoginForm from '../auth/LoginForm';
 import RegisterForm from '../auth/RegisterForm';
 import Logout from '../auth/Logout';
@@ -17,13 +18,13 @@ const DashboardDrawer = props => {
     <Drawer.Navigator>
       {isAuthenticated ? (
         <>
-          <Drawer.Screen name="Home" component={Home} />
-          <Drawer.Screen name="Logout" component={Logout} />
+          <Drawer.Screen name={HOME} component={Home} />
+          <Drawer.Screen name={LOGOUT} component={Logout} />
         </>
       ) : (
         <>
-          <Drawer.Screen name="Login" component={LoginForm} />
-          <Drawer.Screen name="Register" component={RegisterForm} />
+          <Drawer.Screen name={LOGIN} component={LoginForm} />
+          <Drawer.Screen name={REGISTER} component={RegisterForm} />
         </>
       )}
     </Drawer.Navigator>
