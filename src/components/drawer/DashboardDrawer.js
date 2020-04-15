@@ -1,13 +1,14 @@
 import * as React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {AppState} from 'constants/app';
+import {connect} from 'react-redux';
 
 import {HOME, LOGIN, LOGOUT, REGISTER} from 'constants';
 import Home from 'screens/home/HomeScreen';
 import Login from 'screens/authenticate/LoginScreen';
 import Register from 'screens/authenticate/RegisterScreen';
 import Logout from 'screens/authenticate/LogoutScreen';
-import {connect} from 'react-redux';
+import DashboardTab from 'components/tab/DashboardTab';
 
 const Drawer = createDrawerNavigator();
 
@@ -19,6 +20,7 @@ const DashboardDrawer = props => {
       {isAuthenticated ? (
         <>
           <Drawer.Screen name={HOME} component={Home} />
+          <Drawer.Screen name={'Features'} component={DashboardTab} />
           <Drawer.Screen name={LOGOUT} component={Logout} />
         </>
       ) : (

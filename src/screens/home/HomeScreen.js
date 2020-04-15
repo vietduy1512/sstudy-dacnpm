@@ -1,42 +1,20 @@
-import React, {useState, useEffect} from 'react';
-import axios from 'axios';
-import {Text, View, Button} from 'react-native';
+import React from 'react';
+import {View, StyleSheet, Image} from 'react-native';
 
 const HomeScreen = () => {
-  const [title, setTitle] = useState(null);
-  const [dataList, setDataList] = useState([]);
-
-  useEffect(() => {
-    axios.get('/data').then(res => {
-      setTitle(res.data.title);
-      setDataList(res.data.data);
-    });
-  }, []);
-
-  let refresh = () => {
-    axios
-      .get('/data')
-      .then(res => {
-        setTitle(res.data.title);
-        setDataList(res.data.data);
-      })
-      .catch(() => {
-        setTitle(null);
-        setDataList([]);
-      });
-  };
-
   return (
-    <View className="text-center">
-      <View>
-        <Button title="Refresh" onPress={refresh} />
-      </View>
-      <Text>{title}</Text>
-      {dataList.map(data => (
-        <Text>{data}</Text>
-      ))}
+    <View style={styles.container}>
+      <Image style={styles.logo} source={require('assets/images/bg-1.jpg')} />
     </View>
   );
 };
 
 export default HomeScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
