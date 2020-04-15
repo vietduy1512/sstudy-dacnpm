@@ -17,7 +17,7 @@ PushNotification.configure({
   requestPermissions: true,
 });
 
-function ChildNotification() {
+const ChildNotificationScreen = () => {
   const sendNotification = () => {
     PushNotification.localNotification({
       foreground: false,
@@ -33,9 +33,9 @@ function ChildNotification() {
       <Button title="Send Notification" onPress={sendNotification} />
     </View>
   );
-}
+};
 
-export default ChildNotification;
+export default ChildNotificationScreen;
 
 const styles = StyleSheet.create({
   container: {

@@ -10,7 +10,7 @@ import {
   Keyboard,
 } from 'react-native';
 
-import ChatLineHolder from './chatLineHolder';
+import ChatLineHolder from 'components/message/ChatLineHolder';
 
 export default function MessageScreen() {
   const [chatData, setChatData] = useState([

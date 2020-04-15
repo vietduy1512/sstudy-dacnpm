@@ -3,7 +3,7 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import {logout} from 'actions/appAction';
 
-const Logout = props => {
+const LogoutScreen = props => {
   useEffect(() => {
     const logoutListener = props.navigation.addListener('focus', () => {
       axios
@@ -26,4 +26,4 @@ const Logout = props => {
 export default connect(
   null,
   {logout},
-)(Logout);
+)(LogoutScreen);

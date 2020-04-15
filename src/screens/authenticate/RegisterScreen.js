@@ -1,16 +1,23 @@
 import React, {useState} from 'react';
 //import {useToasts} from 'react-toast-notifications';
-import {connect} from 'react-redux';
-import {login} from 'actions/appAction';
 import axios from 'axios';
-import {Text, TextInput, Button, View, StyleSheet} from 'react-native';
+import {
+  Text,
+  TextInput,
+  Button,
+  View,
+  ScrollView,
+  StyleSheet,
+} from 'react-native';
 
-const LoginForm = props => {
+const RegisterScreen = props => {
   //const {addToast} = useToasts();
 
   const [form, setForm] = useState({
     email: '',
+    fullname: '',
     password: '',
+    confirmPassword: '',
   });
   const [errorMessage, setErrorMessage] = useState([]);
   //const [redirectTo, setRedirectTo] = useState(null);
@@ -25,22 +32,21 @@ const LoginForm = props => {
   const handleSubmit = event => {
     event.preventDefault();
     axios
-      .post('/auth/login', form)
+      .post('/auth/register', form)
       .then(response => {
-        if (response.status === 200) {
-          let user = response.data;
-          props.login(user);
-          //setRedirectTo('/');
-          // addToast('Login successfully!', {
+        if (!response.data.errmsg) {
+          //setRedirectTo('/login');
+          // addToast('Register successfully!', {
           //   appearance: 'success',
           //   autoDismiss: true,
           // });
-          props.navigation.navigate('Home');
+          props.navigation.navigate('Login');
+        } else {
+          setErrorMessage(['Email is already taken']);
         }
       })
       .catch(error => {
-        // TODO
-        if (!error.response || !error.response.data || !error.response.data) {
+        if (!error.response || !error.response.data) {
           setErrorMessage(['Something went wrong']);
           return;
         }
@@ -59,7 +65,7 @@ const LoginForm = props => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.section}>
         <Text>Email</Text>
         <TextInput
@@ -67,6 +73,15 @@ const LoginForm = props => {
           style={styles.textInput}
           value={form.email}
           onChangeText={value => handleChange('email', value)}
+        />
+      </View>
+      <View style={styles.section}>
+        <Text>Fullname</Text>
+        <TextInput
+          placeholder="Input your fullname"
+          style={styles.textInput}
+          value={form.fullname}
+          onChangeText={value => handleChange('fullname', value)}
         />
       </View>
       <View style={styles.section}>
@@ -79,27 +94,29 @@ const LoginForm = props => {
           onChangeText={value => handleChange('password', value)}
         />
       </View>
-      <View style={styles.submit}>
-        <Button title="Login" onPress={handleSubmit} />
+      <View style={styles.section}>
+        <Text>Confirm password</Text>
+        <TextInput
+          secureTextEntry={true}
+          placeholder="Confirm your password"
+          style={styles.textInput}
+          value={form.confirmPassword}
+          onChangeText={value => handleChange('confirmPassword', value)}
+        />
       </View>
-      <View className="text-danger">
+      <View style={styles.submit}>
+        <Button title="Register" onPress={handleSubmit} />
+      </View>
+      <View style={styles.errorMessage}>
         {errorMessage.map(msg => (
-          <Text>{msg}</Text>
+          <Text style={styles.errorText}>{msg}</Text>
         ))}
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
-const mapStateToProps = state => ({
-  appState: state.app.state,
-  currentUser: state.app.user,
-});
-
-export default connect(
-  mapStateToProps,
-  {login},
-)(LoginForm);
+export default RegisterScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -119,5 +136,12 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
+  },
+  errorMessage: {
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  errorText: {
+    color: '#FF0000',
   },
 });

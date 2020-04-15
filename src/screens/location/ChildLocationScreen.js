@@ -6,7 +6,7 @@ import Geolocation from '@react-native-community/geolocation';
 import Geocoder from 'react-native-geocoding';
 import DeviceInfo from 'react-native-device-info';
 
-function ChildLocation() {
+function ChildLocationScreen() {
   const [currentRegion, setCurrentRegion] = useState({
     latitude: 0,
     longitude: 0,
@@ -63,7 +63,7 @@ function ChildLocation() {
   );
 }
 
-export default ChildLocation;
+export default ChildLocationScreen;
 
 const styles = StyleSheet.create({
   container: {

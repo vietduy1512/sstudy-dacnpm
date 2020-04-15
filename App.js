@@ -9,10 +9,10 @@ import Geocoder from 'react-native-geocoding';
 
 import store from './src/store';
 import {DASHBOARD, LOCATION, MESSAGE, NOTIFICATION} from 'constants';
-import DashboardDrawer from 'components/common/DashboardDrawer';
-import ChildLocation from 'screens/location/ChildLocation';
-import ChildNotification from 'screens/notification/ChildNotification';
-import MessageScreen from 'screens/message';
+import DashboardDrawer from 'components/drawer/DashboardDrawer';
+import ChildLocationScreen from 'screens/location/ChildLocationScreen';
+import ChildNotificationScreen from 'screens/notification/ChildNotificationScreen';
+import MessageScreen from 'screens/message/MessageScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -69,9 +69,9 @@ export default function App() {
           tabBarOptions={tabBarOptions}
           initialRouteName="Location">
           <Tab.Screen name={DASHBOARD} component={DashboardDrawer} />
-          <Tab.Screen name={LOCATION} component={ChildLocation} />
+          <Tab.Screen name={LOCATION} component={ChildLocationScreen} />
           <Tab.Screen name={MESSAGE} component={MessageScreen} />
-          <Tab.Screen name={NOTIFICATION} component={ChildNotification} />
+          <Tab.Screen name={NOTIFICATION} component={ChildNotificationScreen} />
         </Tab.Navigator>
       </NavigationContainer>
     </Provider>

@@ -3,10 +3,10 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import {AppState} from 'constants/app';
 
 import {HOME, LOGIN, LOGOUT, REGISTER} from 'constants';
-import Home from 'screens/home/HomePage';
-import LoginForm from '../auth/LoginForm';
-import RegisterForm from '../auth/RegisterForm';
-import Logout from '../auth/Logout';
+import Home from 'screens/home/HomeScreen';
+import Login from 'screens/authenticate/LoginScreen';
+import Register from 'screens/authenticate/RegisterScreen';
+import Logout from 'screens/authenticate/LogoutScreen';
 import {connect} from 'react-redux';
 
 const Drawer = createDrawerNavigator();
@@ -23,8 +23,8 @@ const DashboardDrawer = props => {
         </>
       ) : (
         <>
-          <Drawer.Screen name={LOGIN} component={LoginForm} />
-          <Drawer.Screen name={REGISTER} component={RegisterForm} />
+          <Drawer.Screen name={LOGIN} component={Login} />
+          <Drawer.Screen name={REGISTER} component={Register} />
         </>
       )}
     </Drawer.Navigator>

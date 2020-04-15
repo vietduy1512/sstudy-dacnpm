@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import {Text, View, Button} from 'react-native';
 
-const Home = () => {
+const HomeScreen = () => {
   const [title, setTitle] = useState(null);
   const [dataList, setDataList] = useState([]);
 
@@ -39,4 +39,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomeScreen;

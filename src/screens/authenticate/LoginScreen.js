@@ -1,23 +1,16 @@
 import React, {useState} from 'react';
 //import {useToasts} from 'react-toast-notifications';
+import {connect} from 'react-redux';
+import {login} from 'actions/appAction';
 import axios from 'axios';
-import {
-  Text,
-  TextInput,
-  Button,
-  View,
-  ScrollView,
-  StyleSheet,
-} from 'react-native';
+import {Text, TextInput, Button, View, StyleSheet} from 'react-native';
 
-const RegisterForm = props => {
+const LoginScreen = props => {
   //const {addToast} = useToasts();
 
   const [form, setForm] = useState({
     email: '',
-    fullname: '',
     password: '',
-    confirmPassword: '',
   });
   const [errorMessage, setErrorMessage] = useState([]);
   //const [redirectTo, setRedirectTo] = useState(null);
@@ -32,21 +25,22 @@ const RegisterForm = props => {
   const handleSubmit = event => {
     event.preventDefault();
     axios
-      .post('/auth/register', form)
+      .post('/auth/login', form)
       .then(response => {
-        if (!response.data.errmsg) {
-          //setRedirectTo('/login');
-          // addToast('Register successfully!', {
+        if (response.status === 200) {
+          let user = response.data;
+          props.login(user);
+          //setRedirectTo('/');
+          // addToast('Login successfully!', {
           //   appearance: 'success',
           //   autoDismiss: true,
           // });
-          props.navigation.navigate('Login');
-        } else {
-          setErrorMessage(['Email is already taken']);
+          props.navigation.navigate('Home');
         }
       })
       .catch(error => {
-        if (!error.response || !error.response.data) {
+        // TODO
+        if (!error.response || !error.response.data || !error.response.data) {
           setErrorMessage(['Something went wrong']);
           return;
         }
@@ -65,7 +59,7 @@ const RegisterForm = props => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <View style={styles.container}>
       <View style={styles.section}>
         <Text>Email</Text>
         <TextInput
@@ -73,15 +67,6 @@ const RegisterForm = props => {
           style={styles.textInput}
           value={form.email}
           onChangeText={value => handleChange('email', value)}
-        />
-      </View>
-      <View style={styles.section}>
-        <Text>Fullname</Text>
-        <TextInput
-          placeholder="Input your fullname"
-          style={styles.textInput}
-          value={form.fullname}
-          onChangeText={value => handleChange('fullname', value)}
         />
       </View>
       <View style={styles.section}>
@@ -94,29 +79,27 @@ const RegisterForm = props => {
           onChangeText={value => handleChange('password', value)}
         />
       </View>
-      <View style={styles.section}>
-        <Text>Confirm password</Text>
-        <TextInput
-          secureTextEntry={true}
-          placeholder="Confirm your password"
-          style={styles.textInput}
-          value={form.confirmPassword}
-          onChangeText={value => handleChange('confirmPassword', value)}
-        />
-      </View>
       <View style={styles.submit}>
-        <Button title="Register" onPress={handleSubmit} />
+        <Button title="Login" onPress={handleSubmit} />
       </View>
-      <View style={styles.errorMessage}>
+      <View className="text-danger">
         {errorMessage.map(msg => (
-          <Text style={styles.errorText}>{msg}</Text>
+          <Text>{msg}</Text>
         ))}
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
-export default RegisterForm;
+const mapStateToProps = state => ({
+  appState: state.app.state,
+  currentUser: state.app.user,
+});
+
+export default connect(
+  mapStateToProps,
+  {login},
+)(LoginScreen);
 
 const styles = StyleSheet.create({
   container: {
@@ -136,12 +119,5 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
-  },
-  errorMessage: {
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  errorText: {
-    color: '#FF0000',
   },
 });
