@@ -25,6 +25,7 @@ const DashboardDrawer = props => {
         </>
       ) : (
         <>
+          <Drawer.Screen name={HOME} component={Home} />
           <Drawer.Screen name={LOGIN} component={Login} />
           <Drawer.Screen name={REGISTER} component={Register} />
         </>
