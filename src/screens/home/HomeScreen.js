@@ -1,21 +1,13 @@
 import React from 'react';
-import {View, StyleSheet, Image, Button} from 'react-native';
-import io from 'socket.io-client';
+import {View, StyleSheet, Button} from 'react-native';
+import {CHILD_LOCATION_REQUEST} from 'constants/socket-events';
+import socket from '../../socketio';
+import './homeSocket';
 
 const HomeScreen = () => {
-  const socket = io.connect('http://192.168.0.110:8080');
-
   const sendSocketMessage = () => {
-    socket.emit('send-child-location', {
-      msg: 'Child location',
-      latitude: 0,
-      longitude: 0,
-    });
-  }
-
-  socket.on('get-child-location', data => {
-    console.log(data);
-  });
+    socket.emit(CHILD_LOCATION_REQUEST);
+  };
 
   return (
     <View style={styles.container}>
