@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet, Button} from 'react-native';
 import {CHILD_LOCATION_REQUEST} from 'constants/socket-events';
 import socket from '../../socketio';
-import './homeSocket';
+import '../location/locationSocket';
 
 const HomeScreen = () => {
   const sendSocketMessage = () => {
