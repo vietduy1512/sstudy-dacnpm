@@ -1,0 +1,1 @@
+export const PARENT_ADDRESS = 'PARENT_ADDRESS';
