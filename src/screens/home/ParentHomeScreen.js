@@ -11,7 +11,6 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      {/* <Image style={styles.logo} source={require('assets/images/bg-1.jpg')} /> */}
       <Button title="Send socket" onPress={sendSocketMessage} />
     </View>
   );
