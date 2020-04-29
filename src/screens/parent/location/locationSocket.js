@@ -3,6 +3,7 @@ import socket from 'socketio';
 
 const registerChildLocationResponseListener = () => {
   socket.on(CHILD_LOCATION_RESPONSE, data => {
+    // TODO:
     console.log(data);
   });
 };

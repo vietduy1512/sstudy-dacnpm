@@ -1,21 +1,18 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {View, StyleSheet, Button} from 'react-native';
-import {CHILD_LOCATION_REQUEST} from 'constants/socket-events';
-import socket from 'socketio';
 import registerChildLocationResponseListener from '../location/locationSocket';
+import axios from 'axios';
+
+registerChildLocationResponseListener();
 
 const HomeScreen = () => {
-  useEffect(() => {
-    registerChildLocationResponseListener();
-  }, []);
-
-  const sendSocketMessage = () => {
-    socket.emit(CHILD_LOCATION_REQUEST);
+  const getChildLocation = async () => {
+    await axios.get('/location/getChildLocation');
   };
 
   return (
     <View style={styles.container}>
-      <Button title="Send socket" onPress={sendSocketMessage} />
+      <Button title="Get child location" onPress={getChildLocation} />
     </View>
   );
 };
