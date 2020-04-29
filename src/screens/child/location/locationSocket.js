@@ -3,15 +3,22 @@ import {
   CHILD_LOCATION_RESPONSE,
 } from 'constants/socket-events';
 import socket from 'socketio';
+import Geolocation from '@react-native-community/geolocation';
+import DeviceInfo from 'react-native-device-info';
 
 const registerChildLocationRequestListener = () => {
   socket.on(CHILD_LOCATION_REQUEST, () => {
-    // TODO: get your child location using geo
-    socket.emit(CHILD_LOCATION_RESPONSE, {
-      msg: 'Child location',
-      latitude: 0,
-      longitude: 0,
-    });
+    Geolocation.getCurrentPosition(
+      position => {
+        socket.emit(CHILD_LOCATION_RESPONSE, position);
+      },
+      error => console.log(error),
+      {
+        enableHighAccuracy: DeviceInfo.isEmulatorSync() ? true : false,
+        timeout: 2000,
+        maximumAge: 1000,
+      },
+    );
   });
 };
 

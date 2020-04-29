@@ -31,7 +31,10 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+  },
+  logo: {
+    flex: 1,
+    width: undefined,
+    height: undefined,
   },
 });
