@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Text, Button} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import '../location/locationSocket';
 import {APP_TYPE} from 'constants/async-storage';
 import {AppType} from 'constants/app';
 

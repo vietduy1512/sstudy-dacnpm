@@ -1,10 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Text, TextInput, Button} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import '../location/locationSocket';
 import {SAVE_PARENT_ADDRES_SESSION} from 'constants/socket-events';
 import {PARENT_ADDRESS} from 'constants/async-storage';
-import socket from '../../socketio';
+import socket from 'socketio';
 
 const ParentAddressScreen = () => {
   const [parentAddress, setParentAddress] = useState('');

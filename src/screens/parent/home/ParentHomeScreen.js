@@ -1,10 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, StyleSheet, Button} from 'react-native';
 import {CHILD_LOCATION_REQUEST} from 'constants/socket-events';
-import socket from '../../socketio';
-import '../location/locationSocket';
+import socket from 'socketio';
+import registerChildLocationResponseListener from '../location/locationSocket';
 
 const HomeScreen = () => {
+  useEffect(() => {
+    registerChildLocationResponseListener();
+  }, []);
+
   const sendSocketMessage = () => {
     socket.emit(CHILD_LOCATION_REQUEST);
   };

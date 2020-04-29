@@ -8,7 +8,7 @@ import {APP_TYPE} from 'constants/async-storage';
 import {AppType} from 'constants/app';
 import ParentDashboardDrawer from 'components/drawer/ParentDashboardDrawer';
 import ChildDashboardDrawer from 'components/drawer/ChildDashboardDrawer';
-import ChooseAppTypeScreen from 'screens/settings/ChooseAppTypeScreen';
+import ChooseAppTypeScreen from 'screens/common/settings/ChooseAppTypeScreen';
 
 export default function App() {
   const [appType, setAppType] = useState('loading');

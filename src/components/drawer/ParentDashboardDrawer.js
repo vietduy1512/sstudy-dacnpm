@@ -3,12 +3,12 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import {AppState} from 'constants/app';
 import {connect} from 'react-redux';
 import {HOME, LOGIN, LOGOUT, REGISTER, APP_TYPE} from 'constants';
-import ParentHome from 'screens/home/ParentHomeScreen';
-import Login from 'screens/authenticate/LoginScreen';
-import Register from 'screens/authenticate/RegisterScreen';
-import Logout from 'screens/authenticate/LogoutScreen';
+import ParentHome from 'screens/parent/home/ParentHomeScreen';
+import Login from 'screens/parent/authenticate/LoginScreen';
+import Register from 'screens/parent/authenticate/RegisterScreen';
+import Logout from 'screens/parent/authenticate/LogoutScreen';
 import DashboardTab from 'components/tab/DashboardTab';
-import ChooseAppTypeScreen from 'screens/settings/ChooseAppTypeScreen';
+import ChooseAppTypeScreen from 'screens/common/settings/ChooseAppTypeScreen';
 
 const Drawer = createDrawerNavigator();
 

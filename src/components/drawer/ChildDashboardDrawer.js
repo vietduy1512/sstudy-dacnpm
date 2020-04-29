@@ -1,9 +1,9 @@
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {HOME, PARENT_ADDRESS, APP_TYPE} from 'constants';
-import ChildHome from 'screens/home/ChildHomeScreen';
-import ChooseAppTypeScreen from 'screens/settings/ChooseAppTypeScreen';
-import ParentAddressScreen from 'screens/settings/ParentAddressScreen';
+import ChildHome from 'screens/child/home/ChildHomeScreen';
+import ParentAddressScreen from 'screens/child/settings/ParentAddressScreen';
+import ChooseAppTypeScreen from 'screens/common/settings/ChooseAppTypeScreen';
 
 const Drawer = createDrawerNavigator();
 
