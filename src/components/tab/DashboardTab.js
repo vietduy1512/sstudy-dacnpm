@@ -1,15 +1,14 @@
 import 'react-native-gesture-handler';
 import React, {useEffect} from 'react';
 import {PermissionsAndroid} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Geocoder from 'react-native-geocoding';
 
 import {DASHBOARD, LOCATION, MESSAGE, NOTIFICATION} from 'constants';
-import ChildLocationScreen from 'screens/location/ChildLocationScreen';
-import ChildNotificationScreen from 'screens/notification/ChildNotificationScreen';
-import MessageScreen from 'screens/message/MessageScreen';
+import ChildLocationScreen from 'screens/parent/location/ChildLocationScreen';
+import ChildNotificationScreen from 'screens/parent/notification/ChildNotificationScreen';
+import MessageScreen from 'screens/parent/message/MessageScreen';
 
 const Tab = createBottomTabNavigator();
 

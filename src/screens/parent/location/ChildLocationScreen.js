@@ -2,11 +2,16 @@ import 'react-native-gesture-handler';
 import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Button} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
-import Geolocation from '@react-native-community/geolocation';
 import Geocoder from 'react-native-geocoding';
-import DeviceInfo from 'react-native-device-info';
+import {
+  CHILD_LOCATION_REQUEST,
+  CHILD_LOCATION_RESPONSE,
+} from 'constants/socket-events';
+import socket from 'socketio';
+import {connect} from 'react-redux';
+import axios from 'axios';
 
-function ChildLocationScreen() {
+const ChildLocationScreen = props => {
   const [currentRegion, setCurrentRegion] = useState({
     latitude: 0,
     longitude: 0,
@@ -15,27 +20,27 @@ function ChildLocationScreen() {
   });
   const [currentAddress, setCurrentAddress] = useState('');
 
-  const updateCurrentPosition = () => {
-    Geolocation.getCurrentPosition(
-      position => {
-        setCurrentRegion({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          latitudeDelta: 0.00922 * 3,
-          longitudeDelta: 0.00421 * 3,
-        });
-        updateCurrentAddress(
-          position.coords.latitude,
-          position.coords.longitude,
-        );
-      },
-      error => console.log(error),
-      {
-        enableHighAccuracy: DeviceInfo.isEmulatorSync() ? true : false,
-        timeout: 2000,
-        maximumAge: 1000,
-      },
-    );
+  socket.on(CHILD_LOCATION_RESPONSE, position => {
+    // TODO: add this data which get from child to your map
+    console.log(position);
+    setCurrentRegion({
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude,
+      latitudeDelta: 0.00922 * 3,
+      longitudeDelta: 0.00421 * 3,
+    });
+    updateCurrentAddress(position.coords.latitude, position.coords.longitude);
+  });
+
+  const getChildLocation = () => {
+    if (props.currentUser && props.currentUser.email) {
+      socket.emit(CHILD_LOCATION_REQUEST, props.currentUser.email, async () => {
+        await axios.get('/location/getChildLocation');
+      });
+    } else {
+      // TODO
+      console.log('Not logged in yet!');
+    }
   };
 
   const updateCurrentAddress = async (latitude, longitude) => {
@@ -45,7 +50,7 @@ function ChildLocationScreen() {
   };
 
   useEffect(() => {
-    updateCurrentPosition();
+    getChildLocation();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -58,12 +63,19 @@ function ChildLocationScreen() {
           description={currentAddress}
         />
       </MapView>
-      <Button title="Refresh" onPress={updateCurrentPosition} />
+      <Button title="Get new location" onPress={getChildLocation} />
     </View>
   );
-}
+};
 
-export default ChildLocationScreen;
+const mapStateToProps = state => ({
+  currentUser: state.app.user,
+});
+
+export default connect(
+  mapStateToProps,
+  {},
+)(ChildLocationScreen);
 
 const styles = StyleSheet.create({
   container: {
