@@ -3,10 +3,7 @@ import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Button, Alert} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import Geocoder from 'react-native-geocoding';
-import {
-  CHILD_LOCATION_REQUEST,
-  CHILD_LOCATION_RESPONSE,
-} from 'constants/socket-events';
+import {CHILD_LOCATION_RESPONSE} from 'constants/socket-events';
 import socket from 'socketio';
 import {connect} from 'react-redux';
 import axios from 'axios';
