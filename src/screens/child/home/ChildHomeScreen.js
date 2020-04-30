@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import {SAVE_PARENT_ADDRES_SESSION} from 'constants/socket-events';
+import {INIT_CHILD_SESSION} from 'constants/socket-events';
 import {PARENT_ADDRESS} from 'constants/async-storage';
 import socket from 'socketio';
 import registerChildLocationRequestListener from '../location/locationSocket';
@@ -10,7 +10,7 @@ const HomeScreen = () => {
   useEffect(() => {
     async function initSession() {
       socket.emit(
-        SAVE_PARENT_ADDRES_SESSION,
+        INIT_CHILD_SESSION,
         await AsyncStorage.getItem(PARENT_ADDRESS),
       );
     }
