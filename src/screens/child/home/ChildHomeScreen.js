@@ -6,8 +6,6 @@ import {PARENT_ADDRESS} from 'constants/async-storage';
 import socket from 'socketio';
 import registerChildLocationRequestListener from '../location/locationSocket';
 
-registerChildLocationRequestListener();
-
 const HomeScreen = () => {
   useEffect(() => {
     async function initSession() {
@@ -17,6 +15,7 @@ const HomeScreen = () => {
       );
     }
     initSession();
+    registerChildLocationRequestListener();
   }, []);
 
   return (

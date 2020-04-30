@@ -12,7 +12,9 @@ const registerChildLocationRequestListener = () => {
       position => {
         socket.emit(CHILD_LOCATION_RESPONSE, position);
       },
-      error => console.log(error),
+      error => {
+        socket.emit(CHILD_LOCATION_RESPONSE, error);
+      },
       {
         enableHighAccuracy: DeviceInfo.isEmulatorSync() ? true : false,
         timeout: 2000,
