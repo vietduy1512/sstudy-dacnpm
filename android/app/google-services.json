@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "16277734532",
+    "firebase_url": "https://dacnpm2020-firebase.firebaseio.com",
+    "project_id": "dacnpm2020-firebase",
+    "storage_bucket": "dacnpm2020-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:16277734532:android:fb3d0a5c58cadd2eb16ed1",
+        "android_client_info": {
+          "package_name": "com.dacnpmmobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "16277734532-r8dd0tbuohav59o31ptvk1ghck8vt57a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_w2tOc9HkqIwtYzCJ1RiSb6cHUL-b1qk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "16277734532-r8dd0tbuohav59o31ptvk1ghck8vt57a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

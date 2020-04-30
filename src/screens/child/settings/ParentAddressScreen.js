@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Text, TextInput, Button} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import {SAVE_PARENT_ADDRES_SESSION} from 'constants/socket-events';
+import {INIT_CHILD_SESSION} from 'constants/socket-events';
 import {PARENT_ADDRESS} from 'constants/async-storage';
 import socket from 'socketio';
 
@@ -28,7 +28,7 @@ const ParentAddressScreen = () => {
     await AsyncStorage.setItem(PARENT_ADDRESS, parentAddress);
     setCurrentParentAddress(parentAddress);
     setParentAddress('');
-    socket.emit(SAVE_PARENT_ADDRES_SESSION, parentAddress);
+    socket.emit(INIT_CHILD_SESSION, parentAddress);
   };
 
   return (

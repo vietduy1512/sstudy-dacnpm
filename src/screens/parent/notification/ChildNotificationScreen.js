@@ -10,9 +10,7 @@ PushNotification.configure({
   },
   onNotification: function(notification) {
     console.log('NOTIFICATION:', notification);
-    // process the notification
   },
-  senderID: '',
   popInitialNotification: true,
   requestPermissions: true,
 });
@@ -22,8 +20,8 @@ const ChildNotificationScreen = () => {
     PushNotification.localNotification({
       foreground: false,
       userInteraction: false,
-      title: 'From Child',
-      message: 'My Notification Message',
+      title: 'Notification from parent',
+      message: 'Hello, how are you today?',
       data: {},
     });
   };
