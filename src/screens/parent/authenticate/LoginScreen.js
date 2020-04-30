@@ -9,8 +9,8 @@ const LoginScreen = props => {
   //const {addToast} = useToasts();
 
   const [form, setForm] = useState({
-    email: '',
-    password: '',
+    email: 'admin@gmail.com',
+    password: '123456',
   });
   const [errorMessage, setErrorMessage] = useState([]);
   //const [redirectTo, setRedirectTo] = useState(null);
@@ -39,6 +39,7 @@ const LoginScreen = props => {
         }
       })
       .catch(error => {
+        console.log({error});
         // TODO
         if (!error.response || !error.response.data || !error.response.data) {
           setErrorMessage(['Something went wrong']);
