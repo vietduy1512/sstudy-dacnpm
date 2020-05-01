@@ -63,9 +63,13 @@ const LoginScreen = props => {
       <View style={styles.section}>
         <Text>Email</Text>
         <TextInput
-          placeholder="Input your email"
+          placeholder="Enter your email"
           style={styles.textInput}
           value={form.email}
+          keyboardType="email-address"
+          returnKeyType={'next'}
+          onSubmitEditing={() => this.passwordRef.focus()}
+          blurOnSubmit={false}
           onChangeText={value => handleChange('email', value)}
         />
       </View>
@@ -73,9 +77,11 @@ const LoginScreen = props => {
         <Text>Password</Text>
         <TextInput
           secureTextEntry={true}
-          placeholder="Input your password"
+          placeholder="Enter your password"
           style={styles.textInput}
           value={form.password}
+          returnKeyType="done"
+          ref={passwordRef => (this.passwordRef = passwordRef)}
           onChangeText={value => handleChange('password', value)}
         />
       </View>
