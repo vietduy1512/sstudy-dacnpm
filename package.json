@@ -18,7 +18,9 @@
     "@react-navigation/native": "^5.1.5",
     "@react-navigation/stack": "^5.2.10",
     "axios": "^0.19.2",
+    "formik": "^2.1.4",
     "lodash": "^4.17.15",
+    "native-base": "^2.13.12",
     "react": "16.11.0",
     "react-native": "0.62.2",
     "react-native-background-task": "^0.2.1",
@@ -37,7 +39,8 @@
     "react-toast-notifications": "^2.4.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "socket.io-client": "2.1.0"
+    "socket.io-client": "2.1.0",
+    "yup": "^0.28.5"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
