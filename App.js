@@ -10,6 +10,7 @@ import ParentDashboardDrawer from 'components/drawer/ParentDashboardDrawer';
 import ChildDashboardDrawer from 'components/drawer/ChildDashboardDrawer';
 import ChooseAppTypeScreen from 'screens/common/settings/ChooseAppTypeScreen';
 import PushNotificationConfig from './src/pushNotificationConfig';
+import {Root} from 'native-base';
 
 export default function App() {
   const [appType, setAppType] = useState('loading');
@@ -36,11 +37,13 @@ export default function App() {
   };
 
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        {mainLayout()}
-        <PushNotificationConfig />
-      </NavigationContainer>
-    </Provider>
+    <Root>
+      <Provider store={store}>
+        <NavigationContainer>
+          {mainLayout()}
+          <PushNotificationConfig />
+        </NavigationContainer>
+      </Provider>
+    </Root>
   );
 }
