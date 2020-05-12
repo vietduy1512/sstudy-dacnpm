@@ -85,7 +85,7 @@ export default connect(
 const SkipLogin = props => {
   props.skipLogin();
   return null;
-}
+};
 
 const RenderSkipLogin = connect(
   mapStateToProps,
