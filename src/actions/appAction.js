@@ -63,3 +63,11 @@ const dispatchGuest = dispatch => {
     },
   });
 };
+
+// TODO: Reomve all below
+export const skipLogin = () => async dispatch => {
+  let user = {
+    email: 'temp',
+  };
+  dispatchAuth(dispatch, user);
+};
