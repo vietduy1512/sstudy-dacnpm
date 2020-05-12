@@ -32,7 +32,6 @@ export const logout = () => async dispatch => {
 
 export const updateAppType = () => async dispatch => {
   let type = parseInt(await AsyncStorage.getItem(APP_TYPE), 10);
-  console.log(type)
   dispatch({
     type: UPDATE_APP_TYPE,
     appType: type,

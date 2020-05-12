@@ -20,8 +20,6 @@ const ChildLocationScreen = props => {
   const getChildLocation = async () => {
     if (props.currentUser && props.currentUser.email) {
       await axios.get('/location/getChildLocation');
-    } else {
-      Alert.alert('Not logged in!', 'Please log in to get child location');
     }
   };
 
