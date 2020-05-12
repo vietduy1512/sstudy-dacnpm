@@ -1,5 +1,11 @@
-import {UPDATE_APP_STATE, UPDATE_APP_CURRENT_USER} from './types';
+import {
+  UPDATE_APP_STATE,
+  UPDATE_APP_TYPE,
+  UPDATE_APP_CURRENT_USER,
+} from './types';
 import {AppState} from 'constants/app';
+import {APP_TYPE} from 'constants/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 
 export const getUser = () => async dispatch => {
@@ -22,6 +28,15 @@ export const login = user => async dispatch => {
 
 export const logout = () => async dispatch => {
   dispatchGuest(dispatch);
+};
+
+export const updateAppType = () => async dispatch => {
+  let type = parseInt(await AsyncStorage.getItem(APP_TYPE), 10);
+  console.log(type)
+  dispatch({
+    type: UPDATE_APP_TYPE,
+    appType: type,
+  });
 };
 
 const dispatchAuth = (dispatch, user) => {
