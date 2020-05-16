@@ -3,8 +3,6 @@ import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Button, Alert} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import Geocoder from 'react-native-geocoding';
-import {CHILD_LOCATION_RESPONSE} from 'constants/socket-events';
-import socket from 'socketio';
 import {connect} from 'react-redux';
 import axios from 'axios';
 
@@ -12,8 +10,8 @@ const ChildLocationScreen = props => {
   const [currentRegion, setCurrentRegion] = useState({
     latitude: 0,
     longitude: 0,
-    latitudeDelta: 0,
-    longitudeDelta: 0,
+    latitudeDelta: 0.00922 * 3,
+    longitudeDelta: 0.00421 * 3,
   });
   const [isValidLocation, setIsValidLocation] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -22,39 +20,37 @@ const ChildLocationScreen = props => {
   useEffect(() => {
     setupDefaultRegion();
     getChildLocation();
-    socket.on(CHILD_LOCATION_RESPONSE, position => {
-      if (!position.coords) {
-        showError();
-        setupDefaultRegion();
-        return;
-      }
-      setCurrentRegion({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-        latitudeDelta: 0.00922 * 3,
-        longitudeDelta: 0.00421 * 3,
-      });
-      updateCurrentAddress(position.coords.latitude, position.coords.longitude);
-    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const setupDefaultRegion = () => {
     setIsValidLocation(false);
     setCurrentRegion({
+      ...currentRegion,
       latitude: 10.762622,
       longitude: 106.660172,
-      latitudeDelta: 0.00922 * 3,
-      longitudeDelta: 0.00421 * 3,
     });
   };
 
   const getChildLocation = async () => {
     if (props.currentUser && props.currentUser.email) {
       try {
-        setIsLoading(true);
+        setIsLoading(false);
         // TODO: Implement waiting icon
-        await axios.get('/location/getChildLocation');
+        let response = await axios.get('/location/getChildLocation');
+        let childLocation = response.data;
+        if (!childLocation) {
+          showError();
+          setupDefaultRegion();
+          return;
+        }
+        setIsValidLocation(true);
+        setCurrentRegion({
+          ...currentRegion,
+          latitude: childLocation.latitude,
+          longitude: childLocation.longitude,
+        });
+        updateCurrentAddress(childLocation.latitude, childLocation.longitude);
       } catch (error) {
         showError();
       }
