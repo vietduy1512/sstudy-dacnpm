@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {View, StyleSheet, Image, Alert} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
-import {PARENT_ADDRESS} from 'constants/async-storage';
+import {PARENT_ADDRESS, DEVICE_TOKEN} from 'constants/async-storage';
 import Geolocation from '@react-native-community/geolocation';
 import DeviceInfo from 'react-native-device-info';
 
@@ -15,10 +15,12 @@ const HomeScreen = () => {
   const initSession = async () => {
     // TODO: implement background task to update location
     let parentAddress = await AsyncStorage.getItem(PARENT_ADDRESS);
-    if (parentAddress) {
+    let deviceToken = await AsyncStorage.getItem(DEVICE_TOKEN);
+    if (parentAddress && deviceToken) {
       await axios
         .post('/users/initChild', {
           parentEmailAddress: parentAddress,
+          deviceToken: deviceToken,
         })
         .then(() => {
           saveCurrentChildPosition(parentAddress);

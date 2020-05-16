@@ -1,7 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
 import 'react-native-gesture-handler';
 import React, {useState, useEffect, useRef} from 'react';
-import {View, StyleSheet, TouchableOpacity, Alert, Text, Image} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  Text,
+  Image,
+} from 'react-native';
 import MapView, {Marker, Callout} from 'react-native-maps';
 import Geocoder from 'react-native-geocoding';
 import {connect} from 'react-redux';
@@ -81,7 +88,7 @@ const ChildLocationScreen = props => {
       // TODO: Implement some cool animation here
       setTimeout(() => {
         markerRef.current.showCallout();
-      }, 500);
+      }, 1000);
     }
   };
 
