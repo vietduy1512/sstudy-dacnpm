@@ -1,10 +1,11 @@
 import 'react-native-gesture-handler';
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Button, Alert} from 'react-native';
-import MapView, {Marker} from 'react-native-maps';
+import {View, StyleSheet, Button, Alert, Text} from 'react-native';
+import MapView, {Marker, Callout} from 'react-native-maps';
 import Geocoder from 'react-native-geocoding';
 import {connect} from 'react-redux';
 import axios from 'axios';
+import moment from 'moment';
 
 const ChildLocationScreen = props => {
   const [currentRegion, setCurrentRegion] = useState({
@@ -12,6 +13,7 @@ const ChildLocationScreen = props => {
     longitude: 0,
     latitudeDelta: 0.00922 * 3,
     longitudeDelta: 0.00421 * 3,
+    updatedAt: null,
   });
   const [isValidLocation, setIsValidLocation] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -49,6 +51,7 @@ const ChildLocationScreen = props => {
           ...currentRegion,
           latitude: childLocation.latitude,
           longitude: childLocation.longitude,
+          updatedAt: childLocation.updatedAt,
         });
         updateCurrentAddress(childLocation.latitude, childLocation.longitude);
       } catch (error) {
@@ -75,11 +78,13 @@ const ChildLocationScreen = props => {
     <View style={styles.container}>
       <MapView style={styles.map} region={currentRegion}>
         {isValidLocation ? (
-          <Marker
-            coordinate={currentRegion}
-            title={'Vị trí của trẻ'}
-            description={currentAddress}
-          />
+          <Marker coordinate={currentRegion}>
+            <Callout style={styles.callout}>
+              <Text style={styles.title}>{'Vị trí của trẻ'}</Text>
+              <Text>{currentAddress}</Text>
+              <Text>{moment(currentRegion.updatedAt).fromNow()}</Text>
+            </Callout>
+          </Marker>
         ) : null}
       </MapView>
       <Button
@@ -107,5 +112,12 @@ const styles = StyleSheet.create({
   },
   map: {
     ...StyleSheet.absoluteFillObject,
+  },
+  callout: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    fontWeight: 'bold',
   },
 });
