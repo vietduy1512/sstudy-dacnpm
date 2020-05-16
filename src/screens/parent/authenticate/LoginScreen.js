@@ -36,7 +36,6 @@ const LoginScreen = props => {
           //   appearance: 'success',
           //   autoDismiss: true,
           // });
-          props.navigation.navigate('Home');
         }
       })
       .catch(error => {

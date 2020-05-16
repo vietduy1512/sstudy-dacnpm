@@ -13,6 +13,7 @@ const HomeScreen = () => {
   }, []);
 
   const initSession = async () => {
+    // TODO: implement background task to update location
     let parentAddress = await AsyncStorage.getItem(PARENT_ADDRESS);
     if (parentAddress) {
       await axios

@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
+import {createStackNavigator} from '@react-navigation/stack';
 import {AppState} from 'constants/app';
 import {connect} from 'react-redux';
 import {skipLogin} from 'actions/appAction';
@@ -26,6 +27,7 @@ import ChildNotificationScreen from 'screens/parent/notification/ChildNotificati
 import MessageScreen from 'screens/parent/message/MessageScreen';
 
 const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 
 const DashboardDrawer = props => {
   const isAuthenticated = props.appState === AppState.AUTHENTICATED;
@@ -45,28 +47,23 @@ const DashboardDrawer = props => {
     requestLocationPermission();
   }, []);
 
-  return (
+  return isAuthenticated ? (
+    <>
+      <Stack.Navigator>
+        <Stack.Screen name={HOME} component={ParentHome} />
+        <Stack.Screen name={LOCATION} component={ChildLocationScreen} />
+        <Stack.Screen name={MESSAGE} component={MessageScreen} />
+        <Stack.Screen name={NOTIFICATION} component={ChildNotificationScreen} />
+        <Stack.Screen name={LOGOUT} component={Logout} />
+        <Drawer.Screen name={APP_TYPE} component={ChooseAppTypeScreen} />
+      </Stack.Navigator>
+    </>
+  ) : (
     <Drawer.Navigator>
-      {isAuthenticated ? (
-        <>
-          <Drawer.Screen name={HOME} component={ParentHome} />
-          <Drawer.Screen name={LOCATION} component={ChildLocationScreen} />
-          <Drawer.Screen name={MESSAGE} component={MessageScreen} />
-          <Drawer.Screen
-            name={NOTIFICATION}
-            component={ChildNotificationScreen}
-          />
-          <Drawer.Screen name={LOGOUT} component={Logout} />
-          <Drawer.Screen name={APP_TYPE} component={ChooseAppTypeScreen} />
-        </>
-      ) : (
-        <>
-          <Drawer.Screen name={LOGIN} component={Login} />
-          <Drawer.Screen name={REGISTER} component={Register} />
-          <Drawer.Screen name={APP_TYPE} component={ChooseAppTypeScreen} />
-          <Drawer.Screen name={'Skip login'} component={RenderSkipLogin} />
-        </>
-      )}
+      <Drawer.Screen name={LOGIN} component={Login} />
+      <Drawer.Screen name={REGISTER} component={Register} />
+      <Drawer.Screen name={APP_TYPE} component={ChooseAppTypeScreen} />
+      <Drawer.Screen name={'Skip login'} component={RenderSkipLogin} />
     </Drawer.Navigator>
   );
 };
