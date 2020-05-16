@@ -1,6 +1,7 @@
+/* eslint-disable react-native/no-inline-styles */
 import 'react-native-gesture-handler';
-import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Button, Alert, Text} from 'react-native';
+import React, {useState, useEffect, useRef} from 'react';
+import {View, StyleSheet, TouchableOpacity, Alert, Text, Image} from 'react-native';
 import MapView, {Marker, Callout} from 'react-native-maps';
 import Geocoder from 'react-native-geocoding';
 import {connect} from 'react-redux';
@@ -18,6 +19,7 @@ const ChildLocationScreen = props => {
   const [isValidLocation, setIsValidLocation] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [currentAddress, setCurrentAddress] = useState('');
+  const markerRef = useRef(null);
 
   useEffect(() => {
     setupDefaultRegion();
@@ -37,7 +39,7 @@ const ChildLocationScreen = props => {
   const getChildLocation = async () => {
     if (props.currentUser && props.currentUser.email) {
       try {
-        setIsLoading(false);
+        setIsLoading(true);
         // TODO: Implement waiting icon
         let response = await axios.get('/location/getChildLocation');
         let childLocation = response.data;
@@ -74,24 +76,49 @@ const ChildLocationScreen = props => {
     setCurrentAddress(address);
   };
 
+  const onRegionChangeComplete = () => {
+    if (markerRef && markerRef.current && markerRef.current.showCallout) {
+      // TODO: Implement some cool animation here
+      setTimeout(() => {
+        markerRef.current.showCallout();
+      }, 500);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <MapView style={styles.map} region={currentRegion}>
+      <MapView
+        style={styles.map}
+        region={currentRegion}
+        onRegionChangeComplete={onRegionChangeComplete}>
         {isValidLocation ? (
-          <Marker coordinate={currentRegion}>
+          <Marker coordinate={currentRegion} ref={markerRef}>
+            <View style={styles.imageContainer}>
+              <Image
+                source={require('assets/images/child-location-marker.png')}
+                style={styles.image}
+              />
+            </View>
             <Callout style={styles.callout}>
               <Text style={styles.title}>{'Vị trí của trẻ'}</Text>
-              <Text>{currentAddress}</Text>
+              <Text style={styles.address}>{currentAddress}</Text>
               <Text>{moment(currentRegion.updatedAt).fromNow()}</Text>
             </Callout>
           </Marker>
         ) : null}
       </MapView>
-      <Button
-        title="Get new location"
+      <TouchableOpacity
+        style={{
+          ...styles.refreshBtn,
+          opacity: isLoading ? 0.3 : 1,
+        }}
         disabled={isLoading}
-        onPress={getChildLocation}
-      />
+        onPress={getChildLocation}>
+        <Image
+          style={styles.refreshBtnImage}
+          source={require('assets/images/refresh-child-location-marker.png')}
+        />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -110,14 +137,46 @@ const styles = StyleSheet.create({
     flex: 1,
     position: 'relative',
   },
+  refreshBtn: {
+    position: 'absolute',
+    backgroundColor: 'white',
+    borderRadius: 30,
+    height: 60,
+    width: 60,
+    padding: 5,
+    right: 15,
+    bottom: 15,
+  },
+  refreshBtnImage: {
+    flex: 1,
+    width: undefined,
+    height: undefined,
+  },
   map: {
     ...StyleSheet.absoluteFillObject,
+  },
+  imageContainer: {
+    height: 50,
+    width: 40,
+  },
+  image: {
+    flex: 1,
+    height: undefined,
+    width: undefined,
   },
   callout: {
     justifyContent: 'center',
     alignItems: 'center',
+    width: 300,
   },
   title: {
+    fontSize: 16,
     fontWeight: 'bold',
+  },
+  address: {
+    fontSize: 13,
+    borderColor: 'lightgray',
+    borderTopWidth: 0.5,
+    borderBottomWidth: 0.5,
   },
 });

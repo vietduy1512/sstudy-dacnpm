@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
   main: {
     zIndex: 1,
     flex: 1,
-    marginTop: 40,
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'flex-start',

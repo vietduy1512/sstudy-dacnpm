@@ -16,8 +16,8 @@ export default SquareButton;
 
 const styles = StyleSheet.create({
   item: {
-    marginBottom: 40,
-    marginHorizontal: 20,
+    marginTop: 20,
+    marginHorizontal: 10,
     width: 150,
     height: 130,
     alignItems: 'center',
