@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Text, TextInput, Button} from 'react-native';
+import {View, StyleSheet, Text, TextInput, Button, Alert} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import {INIT_CHILD_SESSION} from 'constants/socket-events';
-import {PARENT_ADDRESS} from 'constants/async-storage';
-import socket from 'socketio';
+import {PARENT_ADDRESS, DEVICE_TOKEN} from 'constants/async-storage';
+import axios from 'axios';
 
 const ParentAddressScreen = () => {
   const [parentAddress, setParentAddress] = useState('');
@@ -28,7 +27,14 @@ const ParentAddressScreen = () => {
     await AsyncStorage.setItem(PARENT_ADDRESS, parentAddress);
     setCurrentParentAddress(parentAddress);
     setParentAddress('');
-    socket.emit(INIT_CHILD_SESSION, parentAddress);
+    let deviceToken = await AsyncStorage.getItem(DEVICE_TOKEN);
+    let response = await axios.post('/users/initChild', {
+      parentEmailAddress: parentAddress,
+      deviceToken: deviceToken,
+    });
+    if (response.status !== 200) {
+      Alert.alert('Failed to update your information');
+    }
   };
 
   return (

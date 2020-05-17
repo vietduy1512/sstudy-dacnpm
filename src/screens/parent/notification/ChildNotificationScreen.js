@@ -1,34 +1,36 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import {View, StyleSheet, Button} from 'react-native';
-
+import {View, StyleSheet, Button, Alert} from 'react-native';
+import axios from 'axios';
 import PushNotification from 'react-native-push-notification';
 
-PushNotification.configure({
-  onRegister: function(token) {
-    console.log('TOKEN:', token);
-  },
-  onNotification: function(notification) {
-    console.log('NOTIFICATION:', notification);
-  },
-  popInitialNotification: true,
-  requestPermissions: true,
-});
-
 const ChildNotificationScreen = () => {
-  const sendNotification = () => {
+  const localNotification = () => {
     PushNotification.localNotification({
       foreground: false,
       userInteraction: false,
-      title: 'Notification from parent',
-      message: 'Hello, how are you today?',
+      title: 'Local Notification',
+      message: 'Hello world',
       data: {},
     });
   };
 
+  const sendNotificationToChild = async () => {
+    let response = await axios.post('/notification/sendNotificationToChild', {
+      content: 'Hello from parent',
+    });
+    if (response.status !== 200) {
+      Alert.alert('Failed to send notification to child');
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <Button title="Send Notification" onPress={sendNotification} />
+      <Button title="Local Notification" onPress={localNotification} />
+      <Button
+        title="Send Notification To Child"
+        onPress={sendNotificationToChild}
+      />
     </View>
   );
 };

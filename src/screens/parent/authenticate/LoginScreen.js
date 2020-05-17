@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 //import {useToasts} from 'react-toast-notifications';
 import {connect} from 'react-redux';
@@ -35,13 +36,17 @@ const LoginScreen = props => {
           //   appearance: 'success',
           //   autoDismiss: true,
           // });
-          props.navigation.navigate('Home');
         }
       })
       .catch(error => {
-        console.log({error});
+        console.log(error);
         // TODO
-        if (!error.response || !error.response.data || !error.response.data) {
+        if (
+          !error.response ||
+          !error.response.data ||
+          !error.response.data ||
+          !error.response.data.errors
+        ) {
           setErrorMessage(['Something went wrong']);
           return;
         }
@@ -83,9 +88,9 @@ const LoginScreen = props => {
       <View style={styles.submit}>
         <Button title="Login" onPress={handleSubmit} />
       </View>
-      <View className="text-danger">
+      <View style={{alignItems: 'center', marginTop: 10}}>
         {errorMessage.map(msg => (
-          <Text>{msg}</Text>
+          <Text style={{color: 'red'}}>{msg}</Text>
         ))}
       </View>
     </View>

@@ -1,49 +1,54 @@
 import 'react-native-gesture-handler';
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {Provider} from 'react-redux';
 import store from './src/store';
-import AsyncStorage from '@react-native-community/async-storage';
-import {APP_TYPE} from 'constants/async-storage';
 import {AppType} from 'constants/app';
 import ParentDashboardDrawer from 'components/drawer/ParentDashboardDrawer';
 import ChildDashboardDrawer from 'components/drawer/ChildDashboardDrawer';
 import ChooseAppTypeScreen from 'screens/common/settings/ChooseAppTypeScreen';
 import PushNotificationConfig from './src/pushNotificationConfig';
+import {updateAppType} from 'actions/appAction';
+import {connect} from 'react-redux';
 import {Root} from 'native-base';
 
-export default function App() {
-  const [appType, setAppType] = useState('loading');
-
-  useEffect(() => {
-    async function fetchData() {
-      let type = await AsyncStorage.getItem(APP_TYPE);
-      setAppType(parseInt(type, 10));
-    }
-    fetchData();
-  }, []);
-
-  const mainLayout = () => {
-    if (appType === AppType.PARENT) {
-      return <ParentDashboardDrawer />;
-    } else if (appType === AppType.CHILD) {
-      return <ChildDashboardDrawer />;
-    } else if (appType === 'loading') {
-      // TODO: loading icon
-      <></>;
-    } else {
-      return <ChooseAppTypeScreen />;
-    }
-  };
-
+const App = props => {
   return (
     <Root>
       <Provider store={store}>
         <NavigationContainer>
-          {mainLayout()}
+          <RenderMainLayout />
           <PushNotificationConfig />
         </NavigationContainer>
       </Provider>
     </Root>
   );
-}
+};
+
+export default App;
+
+const MainLayout = props => {
+  useEffect(() => {
+    props.updateAppType();
+  }, [props]);
+
+  if (props.appType === AppType.PARENT) {
+    return <ParentDashboardDrawer />;
+  } else if (props.appType === AppType.CHILD) {
+    return <ChildDashboardDrawer />;
+  } else if (props.appType === AppType.LOADING) {
+    // TODO: loading icon
+    return <></>;
+  } else {
+    return <ChooseAppTypeScreen />;
+  }
+};
+
+const mapStateToProps = state => ({
+  appType: state.app.type,
+});
+
+const RenderMainLayout = connect(
+  mapStateToProps,
+  {updateAppType},
+)(MainLayout);
