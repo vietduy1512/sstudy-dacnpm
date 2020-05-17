@@ -2,7 +2,13 @@ import React from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 import {connect} from 'react-redux';
 import SquareButton from 'screens/common/SquareButton';
-import {LOCATION, MESSAGE, NOTIFICATION, LOGOUT} from 'constants';
+import {
+  LOCATION,
+  MESSAGE,
+  NOTIFICATION,
+  GENERATE_TOKEN,
+  LOGOUT,
+} from 'constants';
 
 const HomeScreen = props => {
   return (
@@ -22,6 +28,11 @@ const HomeScreen = props => {
           title="Notification"
           image={require('assets/images/home-notification.png')}
           onPress={() => props.navigation.navigate(NOTIFICATION)}
+        />
+        <SquareButton
+          title="Generate token"
+          image={require('assets/images/home-token.jpg')}
+          onPress={() => props.navigation.navigate(GENERATE_TOKEN)}
         />
         <SquareButton
           title="Logout"

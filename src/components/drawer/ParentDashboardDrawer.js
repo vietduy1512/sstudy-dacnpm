@@ -9,6 +9,7 @@ import {
   LOCATION,
   MESSAGE,
   NOTIFICATION,
+  GENERATE_TOKEN,
   HOME,
   LOGIN,
   LOGOUT,
@@ -25,6 +26,7 @@ import ChooseAppTypeScreen from 'screens/common/settings/ChooseAppTypeScreen';
 import ChildLocationScreen from 'screens/parent/location/ChildLocationScreen';
 import ChildNotificationScreen from 'screens/parent/notification/ChildNotificationScreen';
 import MessageScreen from 'screens/parent/message/MessageScreen';
+import GenerateTokenScreen from 'screens/parent/authenticate/GenerateTokenScreen';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -54,8 +56,8 @@ const DashboardDrawer = props => {
         <Stack.Screen name={LOCATION} component={ChildLocationScreen} />
         <Stack.Screen name={MESSAGE} component={MessageScreen} />
         <Stack.Screen name={NOTIFICATION} component={ChildNotificationScreen} />
+        <Stack.Screen name={GENERATE_TOKEN} component={GenerateTokenScreen} />
         <Stack.Screen name={LOGOUT} component={Logout} />
-        <Drawer.Screen name={APP_TYPE} component={ChooseAppTypeScreen} />
       </Stack.Navigator>
     </>
   ) : (
