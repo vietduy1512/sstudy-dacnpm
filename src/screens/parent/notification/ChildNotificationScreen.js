@@ -16,11 +16,13 @@ const ChildNotificationScreen = () => {
   };
 
   const sendNotificationToChild = async () => {
-    let response = await axios.post('/notification/sendNotificationToChild', {
-      content: 'Hello from parent',
-    });
-    if (response.status !== 200) {
+    try {
+      await axios.post('/notification/sendNotificationToChild', {
+        content: 'Hello from parent',
+      });
+    } catch (error) {
       Alert.alert('Failed to send notification to child');
+      console.log(error);
     }
   };
 
