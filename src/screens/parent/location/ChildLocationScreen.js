@@ -30,7 +30,7 @@ const ChildLocationScreen = props => {
 
   useEffect(() => {
     setupDefaultRegion();
-    //getChildLocation();
+    getChildLocation();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
