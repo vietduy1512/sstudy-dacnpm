@@ -83,21 +83,9 @@ const ChildLocationScreen = props => {
     setCurrentAddress(address);
   };
 
-  const onRegionChangeComplete = () => {
-    if (markerRef && markerRef.current && markerRef.current.showCallout) {
-      // TODO: Implement some cool animation here
-      setTimeout(() => {
-        markerRef.current.showCallout();
-      }, 1000);
-    }
-  };
-
   return (
     <View style={styles.container}>
-      <MapView
-        style={styles.map}
-        region={currentRegion}
-        onRegionChangeComplete={onRegionChangeComplete}>
+      <MapView style={styles.map} region={currentRegion}>
         {isValidLocation ? (
           <Marker coordinate={currentRegion} ref={markerRef}>
             <View style={styles.imageContainer}>

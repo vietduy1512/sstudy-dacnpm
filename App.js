@@ -7,7 +7,7 @@ import {AppType} from 'constants/app';
 import ParentDashboardDrawer from 'components/drawer/ParentDashboardDrawer';
 import ChildDashboardDrawer from 'components/drawer/ChildDashboardDrawer';
 import ChooseAppTypeScreen from 'screens/common/settings/ChooseAppTypeScreen';
-import PushNotificationConfig from './src/pushNotificationConfig';
+import PushNotificationConfig from './src/helpers/PushNotificationConfig';
 import {updateAppType} from 'actions/appAction';
 import {connect} from 'react-redux';
 import {Root} from 'native-base';

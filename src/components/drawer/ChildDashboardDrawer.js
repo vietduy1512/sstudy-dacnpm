@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
 import {PermissionsAndroid} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {HOME, PARENT_ADDRESS, APP_TYPE} from 'constants';
+import {HOME, AUTHENTICATE_TOKEN, APP_TYPE} from 'constants';
 import ChildHome from 'screens/child/home/ChildHomeScreen';
-import ParentAddressScreen from 'screens/child/settings/ParentAddressScreen';
+import AuthenticateToken from 'screens/child/settings/AuthenticateTokenScreen';
 import ChooseAppTypeScreen from 'screens/common/settings/ChooseAppTypeScreen';
 
 const Drawer = createDrawerNavigator();
@@ -26,7 +26,7 @@ const DashboardDrawer = () => {
   return (
     <Drawer.Navigator>
       <Drawer.Screen name={HOME} component={ChildHome} />
-      <Drawer.Screen name={PARENT_ADDRESS} component={ParentAddressScreen} />
+      <Drawer.Screen name={AUTHENTICATE_TOKEN} component={AuthenticateToken} />
       <Drawer.Screen name={APP_TYPE} component={ChooseAppTypeScreen} />
     </Drawer.Navigator>
   );

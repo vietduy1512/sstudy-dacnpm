@@ -6,7 +6,7 @@ import {AppType} from 'constants/app';
 import {updateAppType} from 'actions/appAction';
 import {connect} from 'react-redux';
 
-const ParentAddressScreen = props => {
+const ChooseAppTypeScreen = props => {
   useEffect(() => {
     props.updateAppType();
   }, [props]);
@@ -42,7 +42,7 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {updateAppType},
-)(ParentAddressScreen);
+)(ChooseAppTypeScreen);
 
 const styles = StyleSheet.create({
   container: {

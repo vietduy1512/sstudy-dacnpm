@@ -1,5 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Image, Text, TouchableOpacity, Alert} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Image,
+  Text,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import {connect} from 'react-redux';
 import axios from 'axios';
 
@@ -8,16 +15,15 @@ const GenerateTokenScreen = props => {
 
   useEffect(() => {
     requestOTP();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const requestOTP = async () => {
-    let response = await axios.get('/auth/generateOTP');
-    if (response.status !== 200) {
+    try {
+      let response = await axios.get('/auth/generateOTP');
+      setOtpToken(response.data.token);
+    } catch (error) {
       Alert.alert('Failed to generate token');
     }
-    console.log(response.data);
-    setOtpToken(response.data.token);
   };
 
   return (
