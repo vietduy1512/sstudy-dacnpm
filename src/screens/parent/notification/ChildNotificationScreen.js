@@ -1,38 +1,39 @@
-import 'react-native-gesture-handler';
-import React from 'react';
-import {View, StyleSheet, Button, Alert} from 'react-native';
+import React, {useState} from 'react';
+import {View, StyleSheet, Text, TextInput, Button, Alert} from 'react-native';
 import axios from 'axios';
-import PushNotification from 'react-native-push-notification';
 
-const ChildNotificationScreen = () => {
-  const localNotification = () => {
-    PushNotification.localNotification({
-      foreground: false,
-      userInteraction: false,
-      title: 'Local Notification',
-      message: 'Hello world',
-      data: {},
-    });
+const ChildNotificationScreen = ({navigation}) => {
+  const [message, setMessage] = useState('');
+
+  const handleChange = value => {
+    setMessage(value);
   };
 
-  const sendNotificationToChild = async () => {
+  const sendMessage = async () => {
     try {
       await axios.post('/notification/sendNotificationToChild', {
-        content: 'Hello from parent',
+        content: message,
       });
+      Alert.alert('Send message successfully');
     } catch (error) {
       Alert.alert('Failed to send notification to child');
       console.log(error);
     }
+    setMessage('');
   };
 
   return (
     <View style={styles.container}>
-      <Button title="Local Notification" onPress={localNotification} />
-      <Button
-        title="Send Notification To Child"
-        onPress={sendNotificationToChild}
+      <Text style={styles.messageText}>Send notification to child</Text>
+      <TextInput
+        placeholder="Input your message"
+        style={styles.messageInput}
+        value={message}
+        onChangeText={value => handleChange(value)}
       />
+      <View style={styles.saveBtn}>
+        <Button title="Send" onPress={sendMessage} />
+      </View>
     </View>
   );
 };
@@ -44,5 +45,20 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  messageText: {
+    fontSize: 20,
+  },
+  messageInput: {
+    marginTop: 50,
+    padding: 15,
+    width: '100%',
+    textAlign: 'center',
+    borderColor: 'gray',
+    borderWidth: 1,
+  },
+  saveBtn: {
+    marginTop: 50,
+    width: 100,
   },
 });

@@ -7,11 +7,10 @@ const PushNotificationConfig = () => {
   useEffect(() => {
     PushNotification.configure({
       onRegister: async function(result) {
+        console.log('Device Token:', result);
         let deviceToken = await AsyncStorage.getItem(DEVICE_TOKEN);
-        if (!deviceToken) {
+        if (!deviceToken || deviceToken !== result.token) {
           await AsyncStorage.setItem(DEVICE_TOKEN, result.token);
-        } else if (deviceToken !== result.token) {
-          console.log('Device token is innvalid');
         }
       },
       onNotification: function(notification) {

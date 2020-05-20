@@ -19,6 +19,11 @@ const AuthenticateTokenScreen = props => {
   const handleChange = (value, position) => {
     let index = position - 1;
     setChars[index](value);
+
+    if (value === '') {
+      return;
+    }
+
     if (position !== 6) {
       refs[index + 1].focus();
     } else {
@@ -62,6 +67,7 @@ const AuthenticateTokenScreen = props => {
           style={styles.tokenInput}
           value={char1}
           maxLength={1}
+          keyboardType={'numeric'}
           onChangeText={value => handleChange(value, 1)}
           ref={input => setRef(input, 1)}
         />
@@ -70,6 +76,7 @@ const AuthenticateTokenScreen = props => {
           style={styles.tokenInput}
           value={char2}
           maxLength={1}
+          keyboardType={'numeric'}
           onChangeText={value => handleChange(value, 2)}
           ref={input => setRef(input, 2)}
         />
@@ -78,6 +85,7 @@ const AuthenticateTokenScreen = props => {
           style={styles.tokenInput}
           value={char3}
           maxLength={1}
+          keyboardType={'numeric'}
           onChangeText={value => handleChange(value, 3)}
           ref={input => setRef(input, 3)}
         />
@@ -86,6 +94,7 @@ const AuthenticateTokenScreen = props => {
           style={styles.tokenInput}
           value={char4}
           maxLength={1}
+          keyboardType={'numeric'}
           onChangeText={value => handleChange(value, 4)}
           ref={input => setRef(input, 4)}
         />
@@ -94,6 +103,7 @@ const AuthenticateTokenScreen = props => {
           style={styles.tokenInput}
           value={char5}
           maxLength={1}
+          keyboardType={'numeric'}
           onChangeText={value => handleChange(value, 5)}
           ref={input => setRef(input, 5)}
         />
@@ -102,6 +112,7 @@ const AuthenticateTokenScreen = props => {
           style={styles.tokenInput}
           value={char6}
           maxLength={1}
+          keyboardType={'numeric'}
           onChangeText={value => handleChange(value, 6)}
           ref={input => setRef(input, 6)}
         />
