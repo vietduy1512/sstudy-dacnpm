@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, TextInput} from 'react-native';
 import {Icon} from 'native-base';
+import IconFeather from 'react-native-vector-icons/Feather';
 
 export default function PasswordInput({placeholder, onChange, value, onBlur}) {
   const [icon, setIcon] = useState('eye-off');
@@ -13,6 +14,12 @@ export default function PasswordInput({placeholder, onChange, value, onBlur}) {
 
   return (
     <View style={styles.searchSection}>
+      <IconFeather
+        name="lock"
+        size={24}
+        color="gray"
+        style={styles.inlineIcon}
+      />
       <TextInput
         style={styles.input}
         secureTextEntry={hide}
@@ -21,7 +28,9 @@ export default function PasswordInput({placeholder, onChange, value, onBlur}) {
         value={value}
         onBlur={onBlur}
       />
-      <Icon style={styles.searchIcon} name={icon} onPress={changeIcon} />
+      {value !== '' && (
+        <Icon style={styles.searchIcon} name={icon} onPress={changeIcon} />
+      )}
     </View>
   );
 }
@@ -32,19 +41,29 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    // borderWidth: 1,
+    // borderColor: '#ddd',
+    // borderRadius: 6,
+    borderColor: 'gray',
     borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 6,
+    borderRadius: 20,
+    paddingLeft: 45,
+    backgroundColor: '#fff',
+    height: 45,
   },
   searchIcon: {
-    padding: 10,
+    paddingRight: 10,
+    color: 'gray',
   },
   input: {
     flex: 1,
-    paddingTop: 10,
-    paddingRight: 10,
-    paddingBottom: 10,
-    paddingLeft: 10,
-    fontSize: 18,
+  },
+  inlineIcon: {
+    position: 'absolute',
+    zIndex: 99,
+    width: 24,
+    height: 24,
+    left: 15,
+    top: 8,
   },
 });

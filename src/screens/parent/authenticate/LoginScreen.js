@@ -16,6 +16,7 @@ import LoginInput from '../../../components/inputs/LoginInput';
 import LoginButton from '../../../components/buttons/LoginButton';
 // import GoogleButton from '../../../components/buttons/GoogleButton';
 import LoginWallpaper from '../../../components/wallpapers/LoginWallpaper';
+import bgSrc from 'assets/images/bg-2.jpg';
 
 const LoginScreen = props => {
   const [form, setForm] = useState({
@@ -120,7 +121,7 @@ const LoginScreen = props => {
   };
 
   return (
-    <LoginWallpaper>
+    <LoginWallpaper bgSrc={bgSrc}>
       <View style={styles.container}>
         <View>
           <Text style={styles.title}>SIGN IN</Text>

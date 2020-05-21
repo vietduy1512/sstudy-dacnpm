@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import RegisterForm from 'components/forms/registerForm';
 import {LOGIN} from 'constants/navigation';
+import LoginWallpaper from 'components/wallpapers/LoginWallpaper';
+import bgSrc from 'assets/images/bg-4.jpg';
 
 const RegisterScreen = props => {
   //const {addToast} = useToasts();
@@ -32,63 +34,65 @@ const RegisterScreen = props => {
 
   const handleRegister = values => {
     console.log(values);
-    axios
-      .post('/auth/register', values)
-      .then(response => {
-        if (!response.data.errmsg) {
-          //setRedirectTo('/login');
-          // addToast('Register successfully!', {
-          //   appearance: 'success',
-          //   autoDismiss: true,
-          // });
-          props.navigation.navigate('Login');
-        } else {
-          setErrorMessage(['Email is already taken']);
-        }
-      })
-      .catch(error => {
-        if (!error.response || !error.response.data) {
-          setErrorMessage(['Something went wrong']);
-          return;
-        }
+    // axios
+    //   .post('/auth/register', values)
+    //   .then(response => {
+    //     if (!response.data.errmsg) {
+    //       //setRedirectTo('/login');
+    //       // addToast('Register successfully!', {
+    //       //   appearance: 'success',
+    //       //   autoDismiss: true,
+    //       // });
+    //       props.navigation.navigate('Login');
+    //     } else {
+    //       setErrorMessage(['Email is already taken']);
+    //     }
+    //   })
+    //   .catch(error => {
+    //     if (!error.response || !error.response.data) {
+    //       setErrorMessage(['Something went wrong']);
+    //       return;
+    //     }
 
-        switch (error.response.status) {
-          case 401:
-            setErrorMessage(error.response.data.errors.map(err => err.msg));
-            break;
-          case 400:
-            setErrorMessage(error.response.data.errors.map(err => err.msg));
-            break;
-          default:
-            break;
-        }
-      });
+    //     switch (error.response.status) {
+    //       case 401:
+    //         setErrorMessage(error.response.data.errors.map(err => err.msg));
+    //         break;
+    //       case 400:
+    //         setErrorMessage(error.response.data.errors.map(err => err.msg));
+    //         break;
+    //       default:
+    //         break;
+    //     }
+    //   });
   };
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <Text style={styles.title}>Create an account</Text>
-        <RegisterForm handleRegister={handleRegister} />
-        <View style={styles.errorMessage}>
-          {errorMessage.map(msg => (
-            <Text style={styles.errorText}>{msg}</Text>
-          ))}
-        </View>
-        <View style={styles.conPolicy}>
-          <Text style={styles.policy}>
-            By sign up, you agree with the{' '}
-            <Text style={styles.term_service}>Terms of Service</Text> and{' '}
-            <Text style={styles.term_service}>Privacy Policy</Text>
-          </Text>
-        </View>
-        <TouchableOpacity onPress={() => props.navigation.navigate(LOGIN)}>
-          <View style={styles.login}>
-            <Text style={styles.txtLogin}>Already have an account?</Text>
+    <LoginWallpaper bgSrc={bgSrc}>
+      <ScrollView>
+        <View style={styles.container}>
+          <Text style={styles.title}>Create an account</Text>
+          <RegisterForm handleRegister={handleRegister} />
+          <View style={styles.errorMessage}>
+            {errorMessage.map(msg => (
+              <Text style={styles.errorText}>{msg}</Text>
+            ))}
           </View>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+          <View style={styles.conPolicy}>
+            <Text style={styles.policy}>
+              By sign up, you agree with the{' '}
+              <Text style={styles.term_service}>Terms of Service</Text> and{' '}
+              <Text style={styles.term_service}>Privacy Policy</Text>
+            </Text>
+          </View>
+          <TouchableOpacity onPress={() => props.navigation.navigate(LOGIN)}>
+            <View style={styles.login}>
+              <Text style={styles.txtLogin}>Already have an account?</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </LoginWallpaper>
 
     // <ScrollView contentContainerStyle={styles.container}>
     //   <View style={styles.section}>

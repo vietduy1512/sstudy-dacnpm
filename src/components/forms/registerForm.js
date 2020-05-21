@@ -1,11 +1,13 @@
 import React from 'react';
 //import {useToasts} from 'react-toast-notifications';
-import {TextInput, Button, View, StyleSheet} from 'react-native';
+import {TextInput, View, StyleSheet} from 'react-native';
 import {Formik} from 'formik';
 import * as yup from 'yup';
-import {Toast} from 'native-base';
+import Icon from 'react-native-vector-icons/Feather';
+import Toast from 'react-native-simple-toast';
 
 import PasswordInput from './passwordInput';
+import LoginButton from 'components/buttons/LoginButton';
 
 const registerSchema = yup.object({
   email: yup
@@ -24,15 +26,6 @@ const registerSchema = yup.object({
 });
 
 export default function registerFrom({handleRegister}) {
-  const showToast = title => {
-    Toast.show({
-      text: title,
-      buttonText: 'Okay',
-      // type: 'warning',
-      // duration: 3000,
-    });
-  };
-
   return (
     <View style={styles.container}>
       <Formik
@@ -48,37 +41,51 @@ export default function registerFrom({handleRegister}) {
         }}>
         {props => {
           if (props.touched.email && props.errors.email) {
-            showToast(props.errors.email);
+            Toast.show(props.errors.email);
           } else if (props.touched.fullname && props.errors.fullname) {
-            showToast(props.errors.fullname);
+            Toast.show(props.errors.fullname);
           } else if (props.touched.password && props.errors.password) {
-            showToast(props.errors.password);
+            Toast.show(props.errors.password);
           } else if (
             props.touched.confirmPassword &&
             props.errors.confirmPassword
           ) {
-            showToast(props.errors.confirmPassword);
+            Toast.show(props.errors.confirmPassword);
           } else {
-            Toast.toastInstance._root.closeToast();
           }
-
           return (
             <View>
-              <TextInput
-                style={styles.input}
-                placeholder="Email"
-                onChangeText={props.handleChange('email')}
-                value={props.values.email}
-                onBlur={props.handleBlur('email')}
-              />
+              <View>
+                <Icon
+                  name="mail"
+                  size={24}
+                  color="gray"
+                  style={styles.inlineIcon}
+                />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Email"
+                  onChangeText={props.handleChange('email')}
+                  value={props.values.email}
+                  onBlur={props.handleBlur('email')}
+                />
+              </View>
               <View style={styles.space} />
-              <TextInput
-                style={styles.input}
-                placeholder="Full name"
-                onChangeText={props.handleChange('fullname')}
-                value={props.values.fullname}
-                onBlur={props.handleBlur('fullname')}
-              />
+              <View>
+                <Icon
+                  name="user"
+                  size={24}
+                  color="gray"
+                  style={styles.inlineIcon}
+                />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Full name"
+                  onChangeText={props.handleChange('fullname')}
+                  value={props.values.fullname}
+                  onBlur={props.handleBlur('fullname')}
+                />
+              </View>
               <View style={styles.space} />
               <PasswordInput
                 placeholder="Password"
@@ -95,10 +102,10 @@ export default function registerFrom({handleRegister}) {
               />
 
               <View style={styles.space} />
-              <Button
-                title="sign up"
-                text="submit"
+              <LoginButton
+                title="Register"
                 onPress={props.handleSubmit}
+                isLoading={false}
               />
             </View>
           );
@@ -124,13 +131,27 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   input: {
+    height: 40,
+    borderColor: 'gray',
     borderWidth: 1,
-    borderColor: '#ddd',
-    padding: 10,
-    fontSize: 18,
-    borderRadius: 6,
+    borderRadius: 20,
+    paddingLeft: 45,
+    backgroundColor: '#Fff',
+    // borderWidth: 1,
+    // borderColor: '#ddd',
+    // padding: 10,
+    // fontSize: 18,
+    // borderRadius: 6,
   },
   space: {
     marginTop: 20,
+  },
+  inlineIcon: {
+    position: 'absolute',
+    zIndex: 99,
+    width: 24,
+    height: 24,
+    left: 15,
+    top: 8,
   },
 });
