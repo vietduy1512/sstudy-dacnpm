@@ -6,4 +6,5 @@ export const AppState = Object.freeze({
 export const AppType = Object.freeze({
   PARENT: 0,
   CHILD: 1,
+  LOADING: 2,
 });

@@ -1,30 +1,26 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {View, StyleSheet, Text, Button} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {APP_TYPE} from 'constants/async-storage';
 import {AppType} from 'constants/app';
+import {updateAppType} from 'actions/appAction';
+import {connect} from 'react-redux';
 
-const ParentAddressScreen = () => {
-  const [appType, setAppType] = useState('');
-
+const ChooseAppTypeScreen = props => {
   useEffect(() => {
-    async function fetchData() {
-      let type = await AsyncStorage.getItem(APP_TYPE);
-      setAppType(parseInt(type, 10));
-    }
-    fetchData();
-  }, []);
+    props.updateAppType();
+  }, [props]);
 
   const saveAppType = async type => {
     await AsyncStorage.setItem(APP_TYPE, type.toString());
-    setAppType(type);
+    props.updateAppType();
   };
 
   return (
     <View style={styles.container}>
-      {appType === AppType.PARENT || appType === AppType.CHILD ? (
+      {props.appType === AppType.PARENT || props.appType === AppType.CHILD ? (
         <Text style={styles.appTypeText}>
-          Current app type: {appType ? 'Child' : 'Parent'}
+          Current app type: {props.appType ? 'Child' : 'Parent'}
         </Text>
       ) : (
         <Text style={styles.emptyAppTypeText}>Choose your app type</Text>
@@ -39,7 +35,14 @@ const ParentAddressScreen = () => {
   );
 };
 
-export default ParentAddressScreen;
+const mapStateToProps = state => ({
+  appType: state.app.type,
+});
+
+export default connect(
+  mapStateToProps,
+  {updateAppType},
+)(ChooseAppTypeScreen);
 
 const styles = StyleSheet.create({
   container: {

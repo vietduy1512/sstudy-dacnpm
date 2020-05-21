@@ -1,11 +1,15 @@
 import React, {useEffect} from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
+import {createStackNavigator} from '@react-navigation/stack';
 import {AppState} from 'constants/app';
 import {connect} from 'react-redux';
+import {skipLogin} from 'actions/appAction';
+
 import {
   LOCATION,
   MESSAGE,
   NOTIFICATION,
+  GENERATE_TOKEN,
   HOME,
   LOGIN,
   LOGOUT,
@@ -22,8 +26,10 @@ import ChooseAppTypeScreen from 'screens/common/settings/ChooseAppTypeScreen';
 import ChildLocationScreen from 'screens/parent/location/ChildLocationScreen';
 import ChildNotificationScreen from 'screens/parent/notification/ChildNotificationScreen';
 import MessageScreen from 'screens/parent/message/MessageScreen';
+import GenerateTokenScreen from 'screens/parent/authenticate/GenerateTokenScreen';
 
 const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 
 const DashboardDrawer = props => {
   const isAuthenticated = props.appState === AppState.AUTHENTICATED;
@@ -43,27 +49,23 @@ const DashboardDrawer = props => {
     requestLocationPermission();
   }, []);
 
-  return (
+  return isAuthenticated ? (
+    <>
+      <Stack.Navigator>
+        <Stack.Screen name={HOME} component={ParentHome} />
+        <Stack.Screen name={LOCATION} component={ChildLocationScreen} />
+        <Stack.Screen name={MESSAGE} component={MessageScreen} />
+        <Stack.Screen name={NOTIFICATION} component={ChildNotificationScreen} />
+        <Stack.Screen name={GENERATE_TOKEN} component={GenerateTokenScreen} />
+        <Stack.Screen name={LOGOUT} component={Logout} />
+      </Stack.Navigator>
+    </>
+  ) : (
     <Drawer.Navigator>
-      {isAuthenticated ? (
-        <>
-          <Drawer.Screen name={HOME} component={ParentHome} />
-          <Drawer.Screen name={LOCATION} component={ChildLocationScreen} />
-          <Drawer.Screen name={MESSAGE} component={MessageScreen} />
-          <Drawer.Screen
-            name={NOTIFICATION}
-            component={ChildNotificationScreen}
-          />
-          <Drawer.Screen name={LOGOUT} component={Logout} />
-          <Drawer.Screen name={APP_TYPE} component={ChooseAppTypeScreen} />
-        </>
-      ) : (
-        <>
-          <Drawer.Screen name={LOGIN} component={Login} />
-          <Drawer.Screen name={REGISTER} component={Register} />
-          <Drawer.Screen name={APP_TYPE} component={ChooseAppTypeScreen} />
-        </>
-      )}
+      <Drawer.Screen name={LOGIN} component={Login} />
+      <Drawer.Screen name={REGISTER} component={Register} />
+      <Drawer.Screen name={APP_TYPE} component={ChooseAppTypeScreen} />
+      <Drawer.Screen name={'Skip login'} component={RenderSkipLogin} />
     </Drawer.Navigator>
   );
 };
@@ -77,3 +79,14 @@ export default connect(
   mapStateToProps,
   {},
 )(DashboardDrawer);
+
+//TODO: remove all below
+const SkipLogin = props => {
+  props.skipLogin();
+  return null;
+};
+
+const RenderSkipLogin = connect(
+  mapStateToProps,
+  {skipLogin},
+)(SkipLogin);

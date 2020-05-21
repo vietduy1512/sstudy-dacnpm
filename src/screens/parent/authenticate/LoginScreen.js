@@ -1,4 +1,6 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
+// import {useToasts} from 'react-toast-notifications';
 import {connect} from 'react-redux';
 import {login} from 'actions/appAction';
 import axios from 'axios';
@@ -33,7 +35,7 @@ const LoginScreen = props => {
     });
     //Check if user is already signed in
     _isSignedIn();
-  },[]);
+  }, []);
 
   const _isSignedIn = async () => {
     const isSignedIn = await GoogleSignin.isSignedIn();
@@ -42,8 +44,7 @@ const LoginScreen = props => {
       //Get the User details as user is already signed in
       _getCurrentUserInfo();
     } else {
-      Toast.show('Please Login');
-      // console.log('Please Login');
+      // Toast.show('Please Login');
     }
   };
 
@@ -95,32 +96,26 @@ const LoginScreen = props => {
     axios
       .post('/auth/login', form)
       .then(response => {
+        setIsLoading(false);
         if (response.status === 200) {
           let user = response.data;
           props.login(user);
-          props.navigation.navigate('Home');
         }
       })
       .catch(error => {
-        Toast.show(error.message);
         setIsLoading(false);
-
+        // console.log(error.message);
         // TODO
-        // if (!error.response || !error.response.data || !error.response.data) {
-        //   setErrorMessage(['Something went wrong']);
-        //   return;
-        // }
-
-        // switch (error.response.status) {
-        //   case 401:
-        //     setErrorMessage(error.response.data.errors.map(err => err.msg));
-        //     break;
-        //   case 400:
-        //     setErrorMessage(error.response.data.errors.map(err => err.msg));
-        //     break;
-        //   default:
-        //     break;
-        // }
+        if (
+          !error.response ||
+          !error.response.data ||
+          !error.response.data ||
+          !error.response.data.errors
+        ) {
+          setErrorMessage(['Something went wrong']);
+          Toast.show(error.message);
+          return;
+        }
       });
   };
 
