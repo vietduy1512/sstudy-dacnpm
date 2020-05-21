@@ -83,6 +83,8 @@ target 'dacnpmmobile' do
 
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
+  pod 'RNGoogleSignin', :path => '../node_modules/@react-native-community/google-signin'
+
   target 'dacnpmmobileTests' do
     inherit! :complete
     # Pods for testing
