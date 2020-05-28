@@ -38,7 +38,7 @@ const HomeScreen = ({navigation}) => {
   };
 
   const saveCurrentChildPosition = parentId => {
-    Geolocation.getCurrentPosition(
+    Geolocation.watchPosition(
       async position => {
         await axios.post('/location/saveChildLocation', {
           latitude: position.coords.latitude,
