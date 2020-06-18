@@ -9,23 +9,26 @@ import {
   Text,
   Image,
 } from 'react-native';
-import MapView, {Marker, Callout} from 'react-native-maps';
+import MapView, {Marker, Callout, Polyline} from 'react-native-maps';
 import Geocoder from 'react-native-geocoding';
 import {connect} from 'react-redux';
 import axios from 'axios';
 import moment from 'moment';
 
 const ChildLocationScreen = props => {
-  const [currentRegion, setCurrentRegion] = useState({
-    latitude: 0,
-    longitude: 0,
-    latitudeDelta: 0.00922 * 3,
-    longitudeDelta: 0.00421 * 3,
-    updatedAt: null,
-  });
+  const [childLocations, setChildLocations] = useState([
+    {
+      latitude: 0,
+      longitude: 0,
+      latitudeDelta: 0.00922 * 3,
+      longitudeDelta: 0.00421 * 3,
+      updatedAt: null,
+    },
+  ]);
   const [isValidLocation, setIsValidLocation] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [currentAddress, setCurrentAddress] = useState('');
+  const [currentChildLocation, setCurrentChildLocation] = useState(null);
   const markerRef = useRef(null);
 
   useEffect(() => {
@@ -34,13 +37,26 @@ const ChildLocationScreen = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    setCurrentChildLocation({
+      latitudeDelta: 0.00922 * 3,
+      longitudeDelta: 0.00421 * 3,
+      ...childLocations[0],
+    });
+  }, [childLocations]);
+
   const setupDefaultRegion = () => {
     setIsValidLocation(false);
-    setCurrentRegion({
-      ...currentRegion,
-      latitude: 10.762622,
-      longitude: 106.660172,
-    });
+    setChildLocations([
+      {
+        ...childLocations[0],
+        latitude: 10.762622,
+        longitude: 106.660172,
+        latitudeDelta: 0.00922 * 3,
+        longitudeDelta: 0.00421 * 3,
+        updatedAt: null,
+      },
+    ]);
   };
 
   const getChildLocation = async () => {
@@ -49,20 +65,16 @@ const ChildLocationScreen = props => {
         setIsLoading(true);
         // TODO: Implement waiting icon
         let response = await axios.get('/location/getChildLocation');
-        let childLocation = response.data;
-        if (!childLocation) {
+        let locations = response.data;
+
+        if (!locations) {
           showError();
           setupDefaultRegion();
           return;
         }
         setIsValidLocation(true);
-        setCurrentRegion({
-          ...currentRegion,
-          latitude: childLocation.latitude,
-          longitude: childLocation.longitude,
-          updatedAt: childLocation.updatedAt,
-        });
-        updateCurrentAddress(childLocation.latitude, childLocation.longitude);
+        setChildLocations(locations);
+        updateCurrentAddress(locations[0].latitude, locations[0].longitude);
       } catch (error) {
         showError();
       }
@@ -78,28 +90,46 @@ const ChildLocationScreen = props => {
   };
 
   const updateCurrentAddress = async (latitude, longitude) => {
-    let geocoder = await Geocoder.from(latitude, longitude);
-    let address = geocoder.results[0].formatted_address;
-    setCurrentAddress(address);
+    try {
+      let geocoder = await Geocoder.from(latitude, longitude);
+      let address = geocoder.results[0].formatted_address;
+      setCurrentAddress(address);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <View style={styles.container}>
-      <MapView style={styles.map} region={currentRegion}>
+      <MapView style={styles.map} region={currentChildLocation}>
         {isValidLocation ? (
-          <Marker coordinate={currentRegion} ref={markerRef}>
-            <View style={styles.imageContainer}>
-              <Image
-                source={require('assets/images/child-location-marker.png')}
-                style={styles.image}
-              />
-            </View>
-            <Callout style={styles.callout}>
-              <Text style={styles.title}>{'Vị trí của trẻ'}</Text>
-              <Text style={styles.address}>{currentAddress}</Text>
-              <Text>{moment(currentRegion.updatedAt).fromNow()}</Text>
-            </Callout>
-          </Marker>
+          <>
+            <Polyline
+              coordinates={childLocations}
+              strokeColor="#0066ff"
+              strokeWidth={10}
+            />
+            <Marker coordinate={currentChildLocation} ref={markerRef}>
+              <View style={styles.imageContainer}>
+                <Image
+                  source={require('assets/images/child-location-marker.png')}
+                  style={styles.image}
+                />
+              </View>
+              <Callout style={styles.callout}>
+                <Text style={styles.title}>{'Vị trí của trẻ'}</Text>
+                <Text style={styles.address}>{currentAddress}</Text>
+                <Text style={styles.address}>
+                  {`${parseFloat(currentChildLocation.latitude).toFixed(
+                    3,
+                  )} | ${parseFloat(currentChildLocation.longitude).toFixed(
+                    3,
+                  )}`}
+                </Text>
+                <Text>{moment(currentChildLocation.updatedAt).fromNow()}</Text>
+              </Callout>
+            </Marker>
+          </>
         ) : null}
       </MapView>
       <TouchableOpacity
