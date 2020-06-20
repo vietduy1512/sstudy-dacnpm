@@ -7,6 +7,9 @@ import {PARENT_ID, DEVICE_TOKEN} from 'constants/async-storage';
 import Geolocation from '@react-native-community/geolocation';
 import DeviceInfo from 'react-native-device-info';
 import {AUTHENTICATE_TOKEN} from 'constants';
+import SquareButton from 'screens/common/SquareButton';
+import {MESSAGE, EMERGENCY} from 'constants';
+import PushNotificationConfig from '../../../helpers/PushNotificationConfig';
 
 const HomeScreen = ({navigation}) => {
   useEffect(() => {
@@ -57,7 +60,20 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.main}>
+        <SquareButton
+          title="Emergency"
+          image={require('assets/images/home-sos.png')}
+          onPress={() => navigation.navigate(EMERGENCY)}
+        />
+        <SquareButton
+          title="Messaging"
+          image={require('assets/images/home-messaging.jpg')}
+          onPress={() => navigation.navigate(MESSAGE)}
+        />
+      </View>
       <Image style={styles.logo} source={require('assets/images/bg-1.jpg')} />
+      <PushNotificationConfig />
     </View>
   );
 };
@@ -67,10 +83,22 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  main: {
+    zIndex: 1,
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
   },
   logo: {
     flex: 1,
-    width: undefined,
-    height: undefined,
+    position: 'absolute',
+    width: 450,
+    height: 700,
+    zIndex: -1,
   },
 });

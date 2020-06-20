@@ -2,6 +2,7 @@ import React from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 import {connect} from 'react-redux';
 import SquareButton from 'screens/common/SquareButton';
+import PushNotificationConfig from '../../../helpers/PushNotificationConfig';
 import {
   LOCATION,
   MESSAGE,
@@ -41,6 +42,7 @@ const HomeScreen = props => {
         />
       </View>
       <Image style={styles.logo} source={require('assets/images/bg-2.jpg')} />
+      <PushNotificationConfig />
     </View>
   );
 };
