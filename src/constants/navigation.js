@@ -8,4 +8,6 @@ export const REGISTER = 'Register';
 export const LOGOUT = 'Logout';
 export const GENERATE_TOKEN = 'Generate token';
 export const AUTHENTICATE_TOKEN = 'Authenticate token';
+export const EMERGENCY = 'Emergency';
+export const EMERGENCY_ALERT = 'Emergency Alert';
 export const APP_TYPE = 'App type';

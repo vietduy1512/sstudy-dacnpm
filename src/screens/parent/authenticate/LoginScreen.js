@@ -11,6 +11,9 @@ import {
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-community/google-signin';
+import AsyncStorage from '@react-native-community/async-storage';
+import {DEVICE_TOKEN} from 'constants/async-storage';
+import PushNotificationConfig from '../../../helpers/PushNotificationConfig';
 
 import LoginInput from '../../../components/inputs/LoginInput';
 import LoginButton from '../../../components/buttons/LoginButton';
@@ -92,10 +95,11 @@ const LoginScreen = props => {
     setForm({...form, [name]: value});
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     setIsLoading(true);
+    let deviceToken = await AsyncStorage.getItem(DEVICE_TOKEN);
     axios
-      .post('/auth/login', form)
+      .post('/auth/login', {...form, deviceToken: deviceToken})
       .then(response => {
         setIsLoading(false);
         if (response.status === 200) {
@@ -173,6 +177,7 @@ const LoginScreen = props => {
           </View>
         </View>
       </View>
+      <PushNotificationConfig />
     </LoginWallpaper>
   );
 };

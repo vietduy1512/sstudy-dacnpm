@@ -15,6 +15,7 @@ import {
   LOGOUT,
   REGISTER,
   APP_TYPE,
+  EMERGENCY_ALERT,
 } from 'constants';
 import {PermissionsAndroid} from 'react-native';
 import Geocoder from 'react-native-geocoding';
@@ -27,6 +28,7 @@ import ChildLocationScreen from 'screens/parent/location/ChildLocationScreen';
 import ChildNotificationScreen from 'screens/parent/notification/ChildNotificationScreen';
 import MessageScreen from 'screens/parent/message/MessageScreen';
 import GenerateTokenScreen from 'screens/parent/authenticate/GenerateTokenScreen';
+import EmergencyAlert from 'screens/parent/emergency/EmergencyAlert';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -58,6 +60,7 @@ const DashboardDrawer = props => {
         <Stack.Screen name={NOTIFICATION} component={ChildNotificationScreen} />
         <Stack.Screen name={GENERATE_TOKEN} component={GenerateTokenScreen} />
         <Stack.Screen name={LOGOUT} component={Logout} />
+        <Stack.Screen name={EMERGENCY_ALERT} component={EmergencyAlert} />
       </Stack.Navigator>
     </>
   ) : (
@@ -66,6 +69,7 @@ const DashboardDrawer = props => {
       <Drawer.Screen name={REGISTER} component={Register} />
       <Drawer.Screen name={APP_TYPE} component={ChooseAppTypeScreen} />
       <Drawer.Screen name={'Skip login'} component={RenderSkipLogin} />
+      <Drawer.Screen name={EMERGENCY_ALERT} component={EmergencyAlert} />
     </Drawer.Navigator>
   );
 };

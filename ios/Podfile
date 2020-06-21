@@ -85,6 +85,8 @@ target 'dacnpmmobile' do
 
   pod 'RNGoogleSignin', :path => '../node_modules/@react-native-community/google-signin'
 
+  pod 'RNSound', :path => '../node_modules/react-native-sound'
+
   target 'dacnpmmobileTests' do
     inherit! :complete
     # Pods for testing
