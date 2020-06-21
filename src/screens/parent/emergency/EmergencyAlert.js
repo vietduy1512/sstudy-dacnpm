@@ -1,38 +1,38 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, Text, TextInput, Button, Alert} from 'react-native';
-import axios from 'axios';
+import React, {useEffect} from 'react';
+import {View, StyleSheet, Text, Button, Image} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import Sound from 'react-native-sound';
 
-const ChildNotificationScreen = ({navigation}) => {
-  const [message, setMessage] = useState('');
+Sound.setCategory('Playback');
 
-  const handleChange = value => {
-    setMessage(value);
-  };
+const ChildNotificationScreen = () => {
+  const navigation = useNavigation();
+  useEffect(() => {
+    var alarm = new Sound('alarm.mp3', Sound.MAIN_BUNDLE, error => {
+      if (error) {
+        console.log('failed to load the sound', error);
+        return;
+      }
 
-  const sendMessage = async () => {
-    try {
-      await axios.post('/notification/sendNotificationToChild', {
-        content: message,
-      });
-      Alert.alert('Send message successfully');
-    } catch (error) {
-      Alert.alert('Failed to send notification to child');
-      console.log(error);
-    }
-    setMessage('');
-  };
-
+      alarm.setVolume(1);
+      alarm.play();
+    });
+    return () => {
+      alarm.stop();
+      alarm.release();
+    };
+  });
   return (
     <View style={styles.container}>
-      <Text style={styles.messageText}>Emergency</Text>
-      <TextInput
-        placeholder="Input your message"
-        style={styles.messageInput}
-        value={message}
-        onChangeText={value => handleChange(value)}
-      />
-      <View style={styles.saveBtn}>
-        <Button title="Send" onPress={sendMessage} />
+      <View style={styles.imageContainer}>
+        <Image
+          source={require('assets/images/sos-icon.jpg')}
+          style={styles.image}
+        />
+      </View>
+      <Text style={styles.messageText}>Your child is in danger</Text>
+      <View style={styles.gobackBtn}>
+        <Button title="Go back" onPress={() => navigation.goBack()} />
       </View>
     </View>
   );
@@ -46,19 +46,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  imageContainer: {
+    height: 300,
+    width: 300,
+    marginBottom: 30,
+  },
+  image: {
+    flex: 1,
+    height: undefined,
+    width: undefined,
+  },
   messageText: {
-    fontSize: 20,
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: 'red',
   },
-  messageInput: {
-    marginTop: 50,
-    padding: 15,
-    width: '100%',
-    textAlign: 'center',
-    borderColor: 'gray',
-    borderWidth: 1,
-  },
-  saveBtn: {
-    marginTop: 50,
+  gobackBtn: {
+    marginTop: 30,
     width: 100,
   },
 });

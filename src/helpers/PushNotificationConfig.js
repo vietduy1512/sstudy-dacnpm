@@ -4,10 +4,11 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {DEVICE_TOKEN} from 'constants/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import {EMERGENCY_ALERT} from 'constants';
+import {AppState} from "react-native";
+
 
 const PushNotificationConfig = () => {
   const navigation = useNavigation();
-  console.log(navigation);
   useEffect(() => {
     PushNotification.configure({
       onRegister: async function(result) {
@@ -21,8 +22,17 @@ const PushNotificationConfig = () => {
         console.log('REMOTE NOTIFICATION ==>', notification);
         switch (notification.type) {
           case 'EMERGENCY':
-            console.log(navigation);
-            navigation.navigate(EMERGENCY_ALERT);
+            if (AppState.currentState.match(/inactive|background/)) {
+              PushNotification.localNotification({
+                color: 'red',
+                vibrate: true,
+                vibration: 10000,
+                message: 'Your child is in danger',
+                soundName: 'alarm.mp3',
+              });
+            } else {
+              navigation.navigate(EMERGENCY_ALERT);
+            }
             break;
           default:
             break;
