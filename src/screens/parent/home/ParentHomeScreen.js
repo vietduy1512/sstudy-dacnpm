@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 import {connect} from 'react-redux';
-import SquareButton from 'screens/common/SquareButton';
 import PushNotificationConfig from '../../../helpers/PushNotificationConfig';
 import {
   LOCATION,
@@ -10,34 +9,35 @@ import {
   GENERATE_TOKEN,
   LOGOUT,
 } from 'constants';
+import HomeButton from '../../../components/buttons/HomeButton';
 
 const HomeScreen = props => {
   return (
     <View style={styles.container}>
       <View style={styles.main}>
-        <SquareButton
+        <HomeButton
           title="Location"
           image={require('assets/images/home-location.jpg')}
           onPress={() => props.navigation.navigate(LOCATION)}
         />
-        <SquareButton
-          title="Messaging"
-          image={require('assets/images/home-messaging.jpg')}
+        <HomeButton
+          title="Message"
+          image={require('assets/images/home-messaging.png')}
           onPress={() => props.navigation.navigate(MESSAGE)}
         />
-        <SquareButton
+        <HomeButton
           title="Notification"
           image={require('assets/images/home-notification.png')}
           onPress={() => props.navigation.navigate(NOTIFICATION)}
         />
-        <SquareButton
+        <HomeButton
           title="Generate token"
-          image={require('assets/images/home-token.jpg')}
+          image={require('assets/images/home-token.png')}
           onPress={() => props.navigation.navigate(GENERATE_TOKEN)}
         />
-        <SquareButton
+        <HomeButton
           title="Logout"
-          image={require('assets/images/logout.jpg')}
+          image={require('assets/images/logout.webp')}
           onPress={() => props.navigation.navigate(LOGOUT)}
         />
       </View>
@@ -67,8 +67,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
   },
   logo: {
     flex: 1,

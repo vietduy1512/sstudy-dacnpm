@@ -1,17 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import {
-  View,
-  StyleSheet,
-  Image,
-  Text,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import {View, StyleSheet, Image, Text, Alert} from 'react-native';
 import {connect} from 'react-redux';
 import axios from 'axios';
+import LoginButton from '../../../components/buttons/LoginButton';
+import QRCode from 'react-native-qrcode-svg';
 
 const GenerateTokenScreen = props => {
   const [otpToken, setOtpToken] = useState(null);
+  const [QRCodeValue, setQRCodeValue] = useState('Not available');
 
   useEffect(() => {
     requestOTP();
@@ -21,6 +17,7 @@ const GenerateTokenScreen = props => {
     try {
       let response = await axios.get('/auth/generateOTP');
       setOtpToken(response.data.token);
+      setQRCodeValue(response.data.token);
     } catch (error) {
       Alert.alert('Failed to generate token');
     }
@@ -33,9 +30,10 @@ const GenerateTokenScreen = props => {
           <Text style={styles.title}>Your OTP Code</Text>
         </View>
         <Text style={styles.code}>{otpToken}</Text>
-        <TouchableOpacity style={styles.copyBtn} onPress={requestOTP}>
-          <Text>GENERATE NEW</Text>
-        </TouchableOpacity>
+        <QRCode size={150} value={QRCodeValue} />
+        <View style={{width: '100%', marginTop: 10}}>
+          <LoginButton title="GENERATE NEW OTP" onPress={requestOTP} />
+        </View>
       </View>
       <Image style={styles.logo} source={require('assets/images/bg-2.jpg')} />
     </View>
@@ -60,9 +58,9 @@ const styles = StyleSheet.create({
   main: {
     flex: 1,
     width: 300,
-    marginVertical: 100,
-    marginHorizontal: 20,
-    justifyContent: 'center',
+    maxHeight: 500,
+    padding: 20,
+    justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: 'white',
     borderWidth: 1,
@@ -89,14 +87,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: 'bold',
+    color: '#a64d79',
   },
   code: {
     fontSize: 40,
     marginBottom: 20,
-  },
-  copyBtn: {
-    backgroundColor: 'lightgrey',
-    borderWidth: 1,
-    padding: 10,
   },
 });

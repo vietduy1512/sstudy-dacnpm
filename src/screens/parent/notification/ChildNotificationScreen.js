@@ -1,6 +1,15 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Text, TextInput, Button, Alert} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  TextInput,
+  Button,
+  Alert,
+  Image,
+} from 'react-native';
 import axios from 'axios';
+import LoginButton from '../../../components/buttons/LoginButton';
 
 const ChildNotificationScreen = ({navigation}) => {
   const [message, setMessage] = useState('');
@@ -24,16 +33,19 @@ const ChildNotificationScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.messageText}>Send notification to child</Text>
+      <Text style={styles.title}>Send notification to child</Text>
       <TextInput
-        placeholder="Input your message"
+        multiline={true}
+        numberOfLines={4}
+        placeholder="Write your message"
         style={styles.messageInput}
         value={message}
         onChangeText={value => handleChange(value)}
       />
       <View style={styles.saveBtn}>
-        <Button title="Send" onPress={sendMessage} />
+        <LoginButton title="Send" onPress={sendMessage} />
       </View>
+      <Image style={styles.logo} source={require('assets/images/bg-2.jpg')} />
     </View>
   );
 };
@@ -43,22 +55,33 @@ export default ChildNotificationScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 20,
   },
-  messageText: {
-    fontSize: 20,
+  title: {
+    fontSize: 25,
+    marginVertical: 20,
+    color: '#a64d79',
+    fontWeight: 'bold'
   },
   messageInput: {
-    marginTop: 50,
-    padding: 15,
+    maxHeight: 120,
     width: '100%',
-    textAlign: 'center',
     borderColor: 'gray',
     borderWidth: 1,
+    borderRadius: 20,
+    paddingHorizontal: 20,
+    backgroundColor: 'white',
   },
   saveBtn: {
-    marginTop: 50,
-    width: 100,
+    marginTop: 20,
+    width: '100%',
+  },
+  logo: {
+    flex: 1,
+    position: 'absolute',
+    width: 450,
+    height: 700,
+    zIndex: -1,
   },
 });

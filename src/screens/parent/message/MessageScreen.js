@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 import ChatLineHolder from 'screens/parent/message/ChatLineHolder';
+import {Icon} from 'native-base';
 
 export default function MessageScreen() {
   const [chatData, setChatData] = useState([
@@ -65,7 +66,7 @@ export default function MessageScreen() {
           </View>
           <View style={{flex: 1 / 10}}>
             <TouchableOpacity onPress={sendMessage}>
-              <Text style={styles.btnSend}>Gửi</Text>
+              <Icon style={styles.btnSend} type="FontAwesome" name="send" />
             </TouchableOpacity>
           </View>
         </View>
@@ -93,6 +94,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 2,
   },
-  txtInput: {height: 100, fontSize: 18},
-  btnSend: {color: '#0099ff', fontSize: 14, marginRight: 15},
+  txtInput: {
+    height: 50,
+    fontSize: 18,
+  },
+  btnSend: {
+    color: '#a64d79',
+    fontSize: 20,
+    marginRight: 15,
+  },
 });

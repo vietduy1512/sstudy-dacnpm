@@ -6,18 +6,12 @@ import {login} from 'actions/appAction';
 import axios from 'axios';
 import {Text, View, StyleSheet} from 'react-native';
 import Toast from 'react-native-simple-toast';
-import {
-  GoogleSignin,
-  GoogleSigninButton,
-  statusCodes,
-} from '@react-native-community/google-signin';
 import AsyncStorage from '@react-native-community/async-storage';
 import {DEVICE_TOKEN} from 'constants/async-storage';
 import PushNotificationConfig from '../../../helpers/PushNotificationConfig';
 
 import LoginInput from '../../../components/inputs/LoginInput';
 import LoginButton from '../../../components/buttons/LoginButton';
-// import GoogleButton from '../../../components/buttons/GoogleButton';
 import LoginWallpaper from '../../../components/wallpapers/LoginWallpaper';
 import bgSrc from 'assets/images/bg-2.jpg';
 
@@ -28,68 +22,6 @@ const LoginScreen = props => {
   });
   const [errorMessage, setErrorMessage] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [userInfo, setUserInfo] = useState(null);
-
-  useEffect(() => {
-    GoogleSignin.configure({
-      scopes: ['https://www.googleapis.com/auth/drive.readonly'],
-      webClientId:
-        '16277734532-r8dd0tbuohav59o31ptvk1ghck8vt57a.apps.googleusercontent.com',
-      offlineAccess: false,
-    });
-    //Check if user is already signed in
-    _isSignedIn();
-  }, []);
-
-  const _isSignedIn = async () => {
-    const isSignedIn = await GoogleSignin.isSignedIn();
-    if (isSignedIn) {
-      Toast.show('User is already signed in');
-      //Get the User details as user is already signed in
-      _getCurrentUserInfo();
-    } else {
-      // Toast.show('Please Login');
-    }
-  };
-
-  const _getCurrentUserInfo = async () => {
-    try {
-      const userInfo = await GoogleSignin.signInSilently();
-      console.log('User Info --> ', userInfo);
-      setUserInfo(userInfo);
-    } catch (error) {
-      if (error.code === statusCodes.SIGN_IN_REQUIRED) {
-        alert('User has not signed in yet');
-        console.log('User has not signed in yet');
-      } else {
-        alert("Something went wrong. Unable to get user's info");
-        console.log("Something went wrong. Unable to get user's info");
-      }
-    }
-  };
-
-  const _signIn = async () => {
-    try {
-      await GoogleSignin.hasPlayServices({
-        showPlayServicesUpdateDialog: true,
-      });
-      const userInfo = await GoogleSignin.signIn();
-      console.log('User Info --> ', userInfo);
-      setUserInfo(userInfo);
-    } catch (error) {
-      console.log('Message', error.message);
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        console.log('User Cancelled the Login Flow');
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        console.log('Signing In');
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        console.log('Play Services Not Available or Outdated');
-      } else {
-        console.log('Some Other Error Happened');
-        console.log(error.code);
-      }
-    }
-  };
 
   const handleChange = (name, value) => {
     setForm({...form, [name]: value});
@@ -163,16 +95,6 @@ const LoginScreen = props => {
               title="Login"
               onPress={handleSubmit}
               isLoading={isLoading}
-            />
-          </View>
-        </View>
-        <View>
-          <View style={{marginHorizontal: 25, marginBottom: 10}}>
-            <GoogleSigninButton
-              style={{marginHorizontal: 25, alignSelf: 'center'}}
-              size={GoogleSigninButton.Size.Wide}
-              color={GoogleSigninButton.Color.Dark}
-              onPress={_signIn}
             />
           </View>
         </View>
