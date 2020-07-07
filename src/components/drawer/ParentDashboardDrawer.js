@@ -53,7 +53,13 @@ const DashboardDrawer = props => {
 
   return isAuthenticated ? (
     <>
-      <Stack.Navigator>
+      <Stack.Navigator
+        initialRouteName="HOME"
+        screenOptions={{
+          headerStyle: {backgroundColor: "#a64d79"},
+          headerTintColor: 'white',
+          headerTitleStyle: {fontSize: 20},
+        }}>
         <Stack.Screen name={HOME} component={ParentHome} />
         <Stack.Screen name={LOCATION} component={ChildLocationScreen} />
         <Stack.Screen name={MESSAGE} component={MessageScreen} />

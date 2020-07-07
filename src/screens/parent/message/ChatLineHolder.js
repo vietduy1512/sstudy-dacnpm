@@ -23,5 +23,8 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginRight: 5,
   },
-  tagName: {color: '#005ce6', marginBottom: 5},
+  tagName: {
+    color: '#a64d79',
+    marginBottom: 5,
+  },
 });
