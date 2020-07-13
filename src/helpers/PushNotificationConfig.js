@@ -3,7 +3,7 @@ import PushNotification from 'react-native-push-notification';
 import AsyncStorage from '@react-native-community/async-storage';
 import {DEVICE_TOKEN} from 'constants/async-storage';
 import {useNavigation} from '@react-navigation/native';
-import {EMERGENCY_ALERT} from 'constants';
+import {EMERGENCY_ALERT} from '../constants';
 import {AppState} from "react-native";
 
 

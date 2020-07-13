@@ -4,7 +4,7 @@ import {View, StyleSheet, TextInput, Button, Alert, Text} from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import {PARENT_ID, DEVICE_TOKEN} from 'constants/async-storage';
-import {HOME} from 'constants';
+import {HOME} from '../../../constants';
 
 const AuthenticateTokenScreen = props => {
   const [char1, setChar1] = useState('');

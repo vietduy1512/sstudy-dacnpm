@@ -5,7 +5,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Geocoder from 'react-native-geocoding';
 
-import {DASHBOARD, LOCATION, MESSAGE, NOTIFICATION} from 'constants';
+import {DASHBOARD, LOCATION, MESSAGE, NOTIFICATION} from '../../constants';
 import ChildLocationScreen from 'screens/parent/location/ChildLocationScreen';
 import ChildNotificationScreen from 'screens/parent/notification/ChildNotificationScreen';
 import MessageScreen from 'screens/parent/message/MessageScreen';

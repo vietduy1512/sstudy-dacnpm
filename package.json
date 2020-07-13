@@ -32,6 +32,7 @@
     "react-native-elements": "^1.2.7",
     "react-native-geocoding": "^0.4.0",
     "react-native-gesture-handler": "^1.6.1",
+    "react-native-indicators": "^0.17.0",
     "react-native-maps": "0.27.1",
     "react-native-push-notification": "^3.1.9",
     "react-native-qrcode-svg": "^6.0.6",

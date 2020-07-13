@@ -8,8 +8,9 @@ import {
   NOTIFICATION,
   GENERATE_TOKEN,
   LOGOUT,
-} from 'constants';
-import HomeButton from '../../../components/buttons/HomeButton';
+  APP_TYPE,
+} from '../../../constants';
+import HomeButton from '../../../components/buttons/ParentHomeButton';
 
 const HomeScreen = props => {
   return (
@@ -17,27 +18,32 @@ const HomeScreen = props => {
       <View style={styles.main}>
         <HomeButton
           title="Location"
-          image={require('assets/images/home-location.jpg')}
+          image={require('assets/images/search-location.jpg')}
           onPress={() => props.navigation.navigate(LOCATION)}
         />
         <HomeButton
           title="Message"
-          image={require('assets/images/home-messaging.png')}
+          image={require('assets/images/message.jpg')}
           onPress={() => props.navigation.navigate(MESSAGE)}
         />
         <HomeButton
-          title="Notification"
-          image={require('assets/images/home-notification.png')}
+          title="Noti"
+          image={require('assets/images/noti.jpg')}
           onPress={() => props.navigation.navigate(NOTIFICATION)}
         />
         <HomeButton
           title="Generate token"
-          image={require('assets/images/home-token.png')}
+          image={require('assets/images/key.jpg')}
           onPress={() => props.navigation.navigate(GENERATE_TOKEN)}
         />
         <HomeButton
+          title="Change app type"
+          image={require('assets/images/swap.jpg')}
+          onPress={() => props.navigation.navigate(APP_TYPE)}
+        />
+        <HomeButton
           title="Logout"
-          image={require('assets/images/logout.webp')}
+          image={require('assets/images/log-out.jpg')}
           onPress={() => props.navigation.navigate(LOGOUT)}
         />
       </View>
@@ -70,7 +76,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
   logo: {
-    flex: 1,
+    // flex: 1,
     position: 'absolute',
     width: 450,
     height: 700,

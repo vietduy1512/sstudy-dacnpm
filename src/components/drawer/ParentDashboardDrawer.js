@@ -16,7 +16,7 @@ import {
   REGISTER,
   APP_TYPE,
   EMERGENCY_ALERT,
-} from 'constants';
+} from '../../constants';
 import {PermissionsAndroid} from 'react-native';
 import Geocoder from 'react-native-geocoding';
 import ParentHome from 'screens/parent/home/ParentHomeScreen';
@@ -67,13 +67,13 @@ const DashboardDrawer = props => {
         <Stack.Screen name={GENERATE_TOKEN} component={GenerateTokenScreen} />
         <Stack.Screen name={LOGOUT} component={Logout} />
         <Stack.Screen name={EMERGENCY_ALERT} component={EmergencyAlert} />
+        <Stack.Screen name={APP_TYPE} component={ChooseAppTypeScreen} />
       </Stack.Navigator>
     </>
   ) : (
     <Drawer.Navigator>
       <Drawer.Screen name={LOGIN} component={Login} />
       <Drawer.Screen name={REGISTER} component={Register} />
-      <Drawer.Screen name={APP_TYPE} component={ChooseAppTypeScreen} />
       <Drawer.Screen name={'Skip login'} component={RenderSkipLogin} />
       <Drawer.Screen name={EMERGENCY_ALERT} component={EmergencyAlert} />
     </Drawer.Navigator>

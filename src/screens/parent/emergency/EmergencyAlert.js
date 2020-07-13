@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {View, StyleSheet, Text, Button, Image} from 'react-native';
+import {View, StyleSheet, Text, Button, Image, Vibration} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Sound from 'react-native-sound';
 
@@ -13,7 +13,6 @@ const ChildNotificationScreen = () => {
         console.log('failed to load the sound', error);
         return;
       }
-
       alarm.setVolume(1);
       alarm.play();
     });
@@ -21,7 +20,11 @@ const ChildNotificationScreen = () => {
       alarm.stop();
       alarm.release();
     };
-  });
+  }, []);
+
+  useEffect(() => {
+    Vibration.vibrate([500, 500, 500, 500], true);
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
@@ -32,7 +35,13 @@ const ChildNotificationScreen = () => {
       </View>
       <Text style={styles.messageText}>Your child is in danger</Text>
       <View style={styles.gobackBtn}>
-        <Button title="Go back" onPress={() => navigation.goBack()} />
+        <Button
+          title="Go back"
+          onPress={() => {
+            navigation.goBack();
+            Vibration.cancel();
+          }}
+        />
       </View>
     </View>
   );

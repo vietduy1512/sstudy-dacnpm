@@ -24,7 +24,7 @@ const EmergencyScreen = () => {
     <View style={styles.container}>
       <TouchableOpacity style={styles.imageContainer} onPress={sendMessage}>
         <Image
-          source={require('assets/images/home-sos.png')}
+          source={require('assets/images/sos-icon.jpg')}
           style={styles.image}
         />
       </TouchableOpacity>

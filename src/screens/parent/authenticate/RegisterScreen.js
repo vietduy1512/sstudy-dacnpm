@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-//import {useToasts} from 'react-toast-notifications';
 import axios from 'axios';
 import {
   View,
@@ -9,13 +8,12 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import RegisterForm from 'components/forms/registerForm';
+import LoginButton from '../../../components/buttons/LoginButton';
 import {LOGIN} from 'constants/navigation';
 import LoginWallpaper from 'components/wallpapers/LoginWallpaper';
 import bgSrc from 'assets/images/bg-4.jpg';
 
 const RegisterScreen = props => {
-  //const {addToast} = useToasts();
-
   // const [form, setForm] = useState({
   //   email: '',
   //   fullname: '',
@@ -85,11 +83,12 @@ const RegisterScreen = props => {
               <Text style={styles.term_service}>Privacy Policy</Text>
             </Text>
           </View>
-          <TouchableOpacity onPress={() => props.navigation.navigate(LOGIN)}>
-            <View style={styles.login}>
-              <Text style={styles.txtLogin}>Already have an account?</Text>
-            </View>
-          </TouchableOpacity>
+          <View style={{paddingHorizontal: 20}}>
+            <LoginButton
+              title="Already have an account?"
+              onPress={() => props.navigation.navigate(LOGIN)}
+            />
+          </View>
         </View>
       </ScrollView>
     </LoginWallpaper>
@@ -182,14 +181,15 @@ const styles = StyleSheet.create({
   conPolicy: {
     marginTop: 10,
     marginHorizontal: 20,
-    borderWidth: 1,
-    borderColor: '#222',
+    borderWidth: 2,
+    borderColor: '#a64d79',
     padding: 10,
     borderRadius: 6,
-    backgroundColor: '#ddd',
+    backgroundColor: '#eee',
   },
   policy: {
     fontSize: 17,
+    fontStyle: 'italic',
   },
   term_service: {
     color: 'blue',
@@ -199,11 +199,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginTop: 20,
     borderWidth: 2,
-    borderColor: '#222',
+    borderColor: '#a64d79',
     padding: 10,
     borderRadius: 4,
   },
   txtLogin: {
     alignSelf: 'center',
+    color: '#a64d79',
   },
 });

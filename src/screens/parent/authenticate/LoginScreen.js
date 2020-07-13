@@ -14,6 +14,7 @@ import LoginInput from '../../../components/inputs/LoginInput';
 import LoginButton from '../../../components/buttons/LoginButton';
 import LoginWallpaper from '../../../components/wallpapers/LoginWallpaper';
 import bgSrc from 'assets/images/bg-2.jpg';
+import LoadingScreen from '../../common/LoadingScreen';
 
 const LoginScreen = props => {
   const [form, setForm] = useState({
@@ -22,10 +23,15 @@ const LoginScreen = props => {
   });
   const [errorMessage, setErrorMessage] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSplashing, setIsSplashing] = useState(true);
 
   const handleChange = (name, value) => {
     setForm({...form, [name]: value});
   };
+
+  useEffect(() => {
+    setTimeout(() => setIsSplashing(false), 3000);
+  }, []);
 
   const handleSubmit = async event => {
     setIsLoading(true);
@@ -56,13 +62,15 @@ const LoginScreen = props => {
       });
   };
 
-  return (
+  return isSplashing ? (
+    <LoadingScreen />
+  ) : (
     <LoginWallpaper bgSrc={bgSrc}>
       <View style={styles.container}>
         <View>
           <Text style={styles.title}>SIGN IN</Text>
           <View style={{margin: 25}}>
-            <Text style={{fontWeight: 'bold'}}>Email</Text>
+            <Text style={{fontWeight: 'bold', color: '#a64d79'}}>Email</Text>
             <LoginInput
               iconName="mail"
               placeholder="Enter your email"
@@ -77,7 +85,7 @@ const LoginScreen = props => {
           </View>
 
           <View style={{margin: 25}}>
-            <Text style={{fontWeight: 'bold'}}>Password</Text>
+            <Text style={{fontWeight: 'bold', color: '#a64d79'}}>Password</Text>
             <LoginInput
               iconName="lock"
               secureTextEntry={true}

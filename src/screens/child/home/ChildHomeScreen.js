@@ -6,9 +6,8 @@ import axios from 'axios';
 import {PARENT_ID, DEVICE_TOKEN} from 'constants/async-storage';
 import Geolocation from '@react-native-community/geolocation';
 import DeviceInfo from 'react-native-device-info';
-import {AUTHENTICATE_TOKEN} from 'constants';
-import SquareButton from 'screens/common/SquareButton';
-import {MESSAGE, EMERGENCY} from 'constants';
+import {AUTHENTICATE_TOKEN, APP_TYPE, EMERGENCY} from '../../../constants';
+import HomeButton from '../../../components/buttons/ChildHomeButton';
 import PushNotificationConfig from '../../../helpers/PushNotificationConfig';
 
 const HomeScreen = ({navigation}) => {
@@ -35,7 +34,7 @@ const HomeScreen = ({navigation}) => {
       });
       saveCurrentChildPosition(parentId);
     } else {
-      navigation.navigate(AUTHENTICATE_TOKEN);
+      // navigation.navigate(AUTHENTICATE_TOKEN);
     }
     // TODO handle deviceToken == null
   };
@@ -61,15 +60,15 @@ const HomeScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.main}>
-        <SquareButton
+        <HomeButton
           title="Emergency"
-          image={require('assets/images/home-sos.png')}
+          image={require('assets/images/sos-icon.jpg')}
           onPress={() => navigation.navigate(EMERGENCY)}
         />
-        <SquareButton
-          title="Messaging"
-          image={require('assets/images/home-messaging.jpg')}
-          onPress={() => navigation.navigate(MESSAGE)}
+        <HomeButton
+          title="Change app type"
+          image={require('assets/images/switch-app-type.png')}
+          onPress={() => navigation.navigate(APP_TYPE)}
         />
       </View>
       <Image style={styles.logo} source={require('assets/images/bg-1.jpg')} />
