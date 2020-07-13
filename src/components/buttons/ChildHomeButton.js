@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 
-export default function HomeButton(props) {
+export default function ChildHomeButton(props) {
   return (
     <View
       style={{
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     marginHorizontal: 5,
     textAlign: 'center',
-    color: '#a64d79',
+    color: 'slateblue',
     fontWeight: 'bold',
   },
 });
