@@ -11,3 +11,4 @@ export const AUTHENTICATE_TOKEN = 'Authenticate token';
 export const EMERGENCY = 'Emergency';
 export const EMERGENCY_ALERT = 'Emergency Alert';
 export const APP_TYPE = 'App type';
+export const DEVICE_INFO = 'Device info';
