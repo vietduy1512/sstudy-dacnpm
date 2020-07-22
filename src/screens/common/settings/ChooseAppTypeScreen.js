@@ -46,7 +46,6 @@ const ChooseAppTypeScreen = props => {
           <Text style={styles.btnContent}>CHILD</Text>
         </TouchableOpacity>
       </View>
-      <Image style={styles.logo} source={bgSrc} />
     </View>
   );
 };
@@ -74,6 +73,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: 'slateblue',
     borderWidth: 3,
+    zIndex: 15,
+    elevation: 50,
   },
   emptyAppTypeText: {
     color: 'gray',

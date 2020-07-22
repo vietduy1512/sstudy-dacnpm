@@ -34,7 +34,7 @@ const HomeScreen = ({navigation}) => {
       });
       saveCurrentChildPosition(parentId);
     } else {
-      // navigation.navigate(AUTHENTICATE_TOKEN);
+      navigation.navigate(AUTHENTICATE_TOKEN);
     }
     // TODO handle deviceToken == null
   };
