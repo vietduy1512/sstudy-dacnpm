@@ -108,7 +108,7 @@ const LoginScreen = props => {
             <LoginButton
               title="Register"
               onPress={() => props.navigation.navigate(REGISTER)}
-              isLoading={isLoading}
+              // isLoading={isLoading}
             />
           </View>
         </View>
