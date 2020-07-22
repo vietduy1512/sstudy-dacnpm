@@ -50,7 +50,7 @@ const DashboardDrawer = props => {
     requestLocationPermission();
   }, []);
 
-  return !isAuthenticated ? (
+  return isAuthenticated ? (
     <>
       <Stack.Navigator
         initialRouteName="HOME"
