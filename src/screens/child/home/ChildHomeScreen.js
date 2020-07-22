@@ -10,6 +10,11 @@ import {AUTHENTICATE_TOKEN, APP_TYPE, EMERGENCY} from '../../../constants';
 import HomeButton from '../../../components/buttons/ChildHomeButton';
 import PushNotificationConfig from '../../../helpers/PushNotificationConfig';
 
+import {
+  AppInstalledChecker,
+  CheckPackageInstallation,
+} from 'react-native-check-app-install';
+
 const HomeScreen = ({navigation}) => {
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -24,19 +29,39 @@ const HomeScreen = ({navigation}) => {
   }, [navigation]);
 
   const initSession = async () => {
-    // TODO: implement background task to update location
-    let parentId = parseInt(await AsyncStorage.getItem(PARENT_ID), 10);
-    let deviceToken = await AsyncStorage.getItem(DEVICE_TOKEN);
-    if (parentId) {
-      await axios.post('/users/initChild', {
-        parentId: parentId,
-        deviceToken: deviceToken,
-      });
-      saveCurrentChildPosition(parentId);
-    } else {
-      navigation.navigate(AUTHENTICATE_TOKEN);
+    try {
+      // TODO: implement background task to update location
+      let parentId = parseInt(await AsyncStorage.getItem(PARENT_ID), 10);
+      let deviceToken = await AsyncStorage.getItem(DEVICE_TOKEN);
+      if (parentId) {
+        await axios.post('/users/initChild', {
+          parentId: parentId,
+          deviceToken: deviceToken,
+        });
+        saveCurrentChildPosition(parentId);
+      } else {
+        navigation.navigate(AUTHENTICATE_TOKEN);
+
+        let battery = await DeviceInfo.getPowerState();
+
+        const installedApps = [];
+        const appList = AppInstalledChecker.getAppList();
+        for (let i = 0; i < appList.length; i++) {
+          let isInstalled = await AppInstalledChecker.isAppInstalled(
+            appList[i],
+          );
+          if (isInstalled) installedApps.push(appList[i]);
+        }
+
+        await axios.post('/child/device-info', {
+          battery,
+          apps: installedApps,
+        });
+      }
+      // TODO handle deviceToken == null
+    } catch (error) {
+      console.log(error.message);
     }
-    // TODO handle deviceToken == null
   };
 
   const saveCurrentChildPosition = parentId => {
