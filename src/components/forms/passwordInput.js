@@ -37,12 +37,14 @@ export default function PasswordInput({placeholder, onChange, value, onBlur}) {
 
 const styles = StyleSheet.create({
   searchSection: {
+    flexDirection: 'row',
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
     borderRadius: 20,
-    paddingLeft: 45,
-    backgroundColor: "white"
+    paddingLeft: 15,
+    backgroundColor: 'white',
+    alignItems: 'center',
   },
   searchIcon: {
     paddingRight: 10,
@@ -52,11 +54,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   inlineIcon: {
-    position: 'absolute',
-    zIndex: 99,
-    width: 24,
-    height: 24,
-    left: 15,
-    top: 8,
+    // position: 'absolute',
+    // zIndex: 99,
+    // width: 24,
+    // height: 24,
+    // left: 15,
+    // top: 8,
   },
 });
