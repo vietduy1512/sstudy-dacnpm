@@ -29,14 +29,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
     borderRadius: 40,
-    // shadowColor: '#000',
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 5,
-    // },
-    // shadowOpacity: 0.34,
-    // shadowRadius: 6.27,
-    // elevation: 10,
   },
   imageContainer: {
     height: 60,
@@ -52,7 +44,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 17,
     marginHorizontal: 5,
-    textAlign: 'center',  
+    textAlign: 'center',
     color: '#a64d79',
     fontWeight: 'bold',
   },
