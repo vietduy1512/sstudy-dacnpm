@@ -3,7 +3,6 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
 import {AppState} from 'constants/app';
 import {connect} from 'react-redux';
-import {skipLogin} from 'actions/appAction';
 
 import {
   LOCATION,
@@ -71,12 +70,11 @@ const DashboardDrawer = props => {
       </Stack.Navigator>
     </>
   ) : (
-    <Drawer.Navigator>
-      <Drawer.Screen name={LOGIN} component={Login} />
-      <Drawer.Screen name={REGISTER} component={Register} />
-      <Drawer.Screen name={'Skip login'} component={RenderSkipLogin} />
-      <Drawer.Screen name={EMERGENCY_ALERT} component={EmergencyAlert} />
-    </Drawer.Navigator>
+    <Stack.Navigator>
+      <Stack.Screen name={LOGIN} component={Login} />
+      <Stack.Screen name={REGISTER} component={Register} />
+      <Stack.Screen name={EMERGENCY_ALERT} component={EmergencyAlert} />
+    </Stack.Navigator>
   );
 };
 
@@ -89,14 +87,3 @@ export default connect(
   mapStateToProps,
   {},
 )(DashboardDrawer);
-
-//TODO: remove all below
-const SkipLogin = props => {
-  props.skipLogin();
-  return null;
-};
-
-const RenderSkipLogin = connect(
-  mapStateToProps,
-  {skipLogin},
-)(SkipLogin);

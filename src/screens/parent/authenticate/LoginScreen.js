@@ -15,6 +15,7 @@ import LoginButton from '../../../components/buttons/LoginButton';
 import LoginWallpaper from '../../../components/wallpapers/LoginWallpaper';
 import bgSrc from 'assets/images/bg-2.jpg';
 import LoadingScreen from '../../common/LoadingScreen';
+import {REGISTER} from 'constants';
 
 const LoginScreen = props => {
   const [form, setForm] = useState({
@@ -102,6 +103,11 @@ const LoginScreen = props => {
             <LoginButton
               title="Login"
               onPress={handleSubmit}
+              isLoading={isLoading}
+            />
+            <LoginButton
+              title="Register"
+              onPress={() => props.navigation.navigate(REGISTER)}
               isLoading={isLoading}
             />
           </View>

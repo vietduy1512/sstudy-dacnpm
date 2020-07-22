@@ -91,6 +91,6 @@ const styles = StyleSheet.create({
   },
   code: {
     fontSize: 40,
-    marginBottom: 20,
+    marginTop: 60,
   },
 });
