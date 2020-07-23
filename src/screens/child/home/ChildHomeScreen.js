@@ -9,11 +9,7 @@ import DeviceInfo from 'react-native-device-info';
 import {AUTHENTICATE_TOKEN, APP_TYPE, EMERGENCY} from '../../../constants';
 import HomeButton from '../../../components/buttons/ChildHomeButton';
 import PushNotificationConfig from '../../../helpers/PushNotificationConfig';
-
-import {
-  AppInstalledChecker,
-  CheckPackageInstallation,
-} from 'react-native-check-app-install';
+import {AppInstalledChecker} from 'react-native-check-app-install';
 
 const HomeScreen = ({navigation}) => {
   useEffect(() => {
@@ -41,22 +37,6 @@ const HomeScreen = ({navigation}) => {
         saveCurrentChildPosition(parentId);
       } else {
         navigation.navigate(AUTHENTICATE_TOKEN);
-
-        let battery = await DeviceInfo.getPowerState();
-
-        const installedApps = [];
-        const appList = AppInstalledChecker.getAppList();
-        for (let i = 0; i < appList.length; i++) {
-          let isInstalled = await AppInstalledChecker.isAppInstalled(
-            appList[i],
-          );
-          if (isInstalled) installedApps.push(appList[i]);
-        }
-
-        await axios.post('/child/device-info', {
-          battery,
-          apps: installedApps,
-        });
       }
       // TODO handle deviceToken == null
     } catch (error) {
@@ -64,7 +44,30 @@ const HomeScreen = ({navigation}) => {
     }
   };
 
-  const saveCurrentChildPosition = parentId => {
+  const sendDeviceInfo = async () => {
+    try {
+      let deviceToken = await AsyncStorage.getItem(DEVICE_TOKEN);
+      let battery = await DeviceInfo.getPowerState();
+
+      const installedApps = [];
+      const appList = AppInstalledChecker.getAppList();
+      for (let i = 0; i < appList.length; i++) {
+        let isInstalled = await AppInstalledChecker.isAppInstalled(appList[i]);
+        if (isInstalled) installedApps.push(appList[i]);
+      }
+
+      await axios.post('/users/device-info', {
+        battery: Math.round(battery.batteryLevel * 100),
+        apps: installedApps,
+        deviceToken,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const saveCurrentChildPosition = async parentId => {
+    await sendDeviceInfo();
     Geolocation.watchPosition(
       async position => {
         await axios.post('/location/saveChildLocation', {

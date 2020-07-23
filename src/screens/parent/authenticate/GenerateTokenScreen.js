@@ -19,7 +19,7 @@ const GenerateTokenScreen = props => {
       setOtpToken(response.data.token);
       setQRCodeValue(response.data.token);
     } catch (error) {
-      Alert.alert('Failed to generate token');
+      Alert.alert('Failed to generate token', error.message);
     }
   };
 

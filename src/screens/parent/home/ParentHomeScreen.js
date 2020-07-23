@@ -23,7 +23,7 @@ const HomeScreen = props => {
         />
         <HomeButton
           title="Device's info"
-          image={require('assets/images/message.jpg')}
+          image={require('assets/images/app-management.jpg')}
           onPress={() => props.navigation.navigate(DEVICE_INFO)}
         />
         <HomeButton
