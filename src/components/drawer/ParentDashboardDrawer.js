@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 
 import {
   LOCATION,
-  MESSAGE,
+  DEVICE_INFO,
   NOTIFICATION,
   GENERATE_TOKEN,
   HOME,
@@ -25,7 +25,7 @@ import Logout from 'screens/parent/authenticate/LogoutScreen';
 import ChooseAppTypeScreen from 'screens/common/settings/ChooseAppTypeScreen';
 import ChildLocationScreen from 'screens/parent/location/ChildLocationScreen';
 import ChildNotificationScreen from 'screens/parent/notification/ChildNotificationScreen';
-import MessageScreen from 'screens/parent/message/MessageScreen';
+import DeviceInfoScreen from 'screens/parent/deviceInfo';
 import GenerateTokenScreen from 'screens/parent/authenticate/GenerateTokenScreen';
 import EmergencyAlert from 'screens/parent/emergency/EmergencyAlert';
 
@@ -61,7 +61,7 @@ const DashboardDrawer = props => {
         }}>
         <Stack.Screen name={HOME} component={ParentHome} />
         <Stack.Screen name={LOCATION} component={ChildLocationScreen} />
-        <Stack.Screen name={MESSAGE} component={MessageScreen} />
+        <Stack.Screen name={DEVICE_INFO} component={DeviceInfoScreen} />
         <Stack.Screen name={NOTIFICATION} component={ChildNotificationScreen} />
         <Stack.Screen name={GENERATE_TOKEN} component={GenerateTokenScreen} />
         <Stack.Screen name={LOGOUT} component={Logout} />

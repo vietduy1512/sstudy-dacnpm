@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import PushNotificationConfig from '../../../helpers/PushNotificationConfig';
 import {
   LOCATION,
-  MESSAGE,
+  DEVICE_INFO,
   NOTIFICATION,
   GENERATE_TOKEN,
   LOGOUT,
@@ -22,9 +22,9 @@ const HomeScreen = props => {
           onPress={() => props.navigation.navigate(LOCATION)}
         />
         <HomeButton
-          title="Message"
+          title="Device's info"
           image={require('assets/images/message.jpg')}
-          onPress={() => props.navigation.navigate(MESSAGE)}
+          onPress={() => props.navigation.navigate(DEVICE_INFO)}
         />
         <HomeButton
           title="Noti"
