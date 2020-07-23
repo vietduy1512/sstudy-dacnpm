@@ -1,6 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
-// import {useToasts} from 'react-toast-notifications';
 import {connect} from 'react-redux';
 import {login} from 'actions/appAction';
 import axios from 'axios';
@@ -19,8 +18,8 @@ import {REGISTER} from 'constants';
 
 const LoginScreen = props => {
   const [form, setForm] = useState({
-    email: '',
-    password: '',
+    email: 'admin@gmail.com',
+    password: '123456',
   });
   const [errorMessage, setErrorMessage] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -48,7 +47,7 @@ const LoginScreen = props => {
       })
       .catch(error => {
         setIsLoading(false);
-        // console.log(error.message);
+        console.log(error);
         // TODO
         if (
           !error.response ||

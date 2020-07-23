@@ -1,14 +1,45 @@
-import React, {useState} from 'react';
-import {View, Text, ImageBackground, StyleSheet, FlatList} from 'react-native';
-
-const data = [
-  {id: '1', name: 'An'},
-  {id: '2', name: 'An'},
-  {id: '3', name: 'An'},
-];
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  FlatList,
+  AsyncStorage,
+} from 'react-native';
+import {PARENT_ID} from 'constants/async-storage';
+import axios from 'axios';
 
 export default function Index() {
-  const [list, setList] = useState(data);
+  const [list, setList] = useState([]);
+  const [battery, setBattery] = useState(0);
+
+  const getChildDeviceInfo = async () => {
+    try {
+      let parentId = parseInt(await AsyncStorage.getItem(PARENT_ID), 10);
+      let info = await axios.get('/users/device-info', {
+        params: {
+          parentId,
+        },
+      });
+      if (!!info) {
+        setBattery(info.data.battery);
+
+        let {apps} = info.data;
+        setList(
+          apps.map(app => {
+            return {id: app, name: app};
+          }),
+        );
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getChildDeviceInfo();
+  }, []);
 
   const renderRow = (title, value) => {
     return (
@@ -22,7 +53,7 @@ export default function Index() {
   const renderEmpty = () => {
     return (
       <View>
-        <Text>No devce connect</Text>
+        <Text>No data</Text>
       </View>
     );
   };
@@ -33,8 +64,8 @@ export default function Index() {
         style={{
           backgroundColor: '#fff',
           padding: 10,
-          marginTop: 10,
-          marginHorizontal: 10,
+          marginVertical: 10,
+          marginHorizontal: 20,
           borderRadius: 10,
           flexDirection: 'row',
         }}>
@@ -47,10 +78,9 @@ export default function Index() {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={{color: '#fff', fontSize: 20}}>{index}</Text>
+          <Text style={{color: '#fff', fontSize: 15}}>{index + 1}</Text>
         </View>
         <View style={{marginLeft: 10}}>
-          {renderRow('Name', item.name)}
           {renderRow('Name', item.name)}
         </View>
       </View>
@@ -74,8 +104,10 @@ export default function Index() {
       imageStyle={styles.imgStyle}
       source={require('assets/images/bg-4.jpg')}
       style={styles.bg}>
-      {renderRow('Batery', '16%')}
-      <Text style={{fontSize: 18, marginTop: 15}}>List device's apps:</Text>
+      {renderRow('Batery', battery + ' %')}
+      <Text style={{fontSize: 18, marginTop: 15, marginLeft: 20}}>
+        Child's device applications
+      </Text>
       {renderBody()}
     </ImageBackground>
   );
@@ -88,8 +120,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#A5A5A5',
     flexDirection: 'column',
     justifyContent: 'flex-start',
+    paddingVertical: 10
   },
-  row: {flexDirection: 'row'},
-  rowTitle: {fontWeight: 'bold', fontSize: 20},
-  rowValue: {fontSize: 20, marginLeft: 10},
+  row: {flexDirection: 'row', marginHorizontal: 20, alignItems: "center"},
+  rowTitle: {fontWeight: 'bold', fontSize: 17},
+  rowValue: {fontSize: 17, marginLeft: 10},
 });
